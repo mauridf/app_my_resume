@@ -1,62 +1,44 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## Sobre My Resume
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistema feito em PHP com LARAVEL composto de uma API e um FrontEnd feito em Vue.js para cadastrar informações e gerar o Curriculo Vitae da Pessoa (Resume).
+O Sistema faz os seguintes Cadastros:
 
-## About Laravel
+- Pessoa (Dados Pessoais)
+- Interesses (Interesses pessoais como por exemplo (cozinhar, assistir tv, etc...)
+- Certificados (Certificados, Certificações e Prêmios)
+- Redes Sociais (Cadastra as Redes Sociais da Pessoa)
+- Formação (Formação da Pessoa (Graduação, Pós-Graduação, etc...)
+- Idioma (Idioma(s) que a pessoa domina e seus níveis (Básico, Intermediário, etc...)
+- Skills (As Skills que a pessoa possui)
+- Experiência (As experiências que a pessoa possui)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Com todas as informações cadastradas é possível gerar o CV em PDF ao final e sempre que possível alterar todas as informações.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Passo a passo da criação do sistema
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Criar o projeto com o comando do composer
+- Rodar para ver se foi criado corretamente
+- Criar as Models, Migrations e Controllers
+- Configurar as conexões de Banco no .env
+- Se não tiver criado ainda, criar a base de dados
+- Executar o comando migrate para criar as tabelas de acordo com o que foi implementado na(s) migration(s).
+- Configurar o arquivo api.php em Routes com as rotas dos endpoints que serão criados.
+- Implementar os Endpoints na(s) Controller(s)
+- Depois de testar os Endpoints no Postman e ajustar o que for necessário.
+- Fazer a instalação dos módulos npm e vue.js e vuex
+- Fazer a instalação dos componentes do jwt para poder criar a autenticação por token
+- Implementar o fontend
+  
+## Tecnologias Utilizadas
 
-## Learning Laravel
+- **BANCO DE DADOS: MySql
+- **BACKEND: PHP
+- **FRONTEND: Vue.js | Vuex
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Para executar o sistema
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Após baixar (clonar) o fonte é necessário instalar o laravel (usei a versão 3.2.1)
+- Fazer as devidas configurações no arquivo env (apontar para o seu localhost e o nome da base q vc criou)
+- Executar o comando migrate para gerar todas as tabelas
+- Executar o comando php artisan serve para rodar o Backend
+- Executar o comando npn run dev ou npn run watch para gerar os assets e compilar
