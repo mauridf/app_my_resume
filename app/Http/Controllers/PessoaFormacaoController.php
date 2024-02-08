@@ -83,6 +83,7 @@ class PessoaFormacaoController extends Controller
      */
     public function destroy(PessoaFormacao $pessoaFormacao)
     {
-        //
+        $pessoaFormacao->delete();
+        return ['msg' => 'A relação de pessoa e formação foi removida com sucesso!'];
     }
 }

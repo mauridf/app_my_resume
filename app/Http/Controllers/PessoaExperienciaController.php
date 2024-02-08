@@ -83,6 +83,7 @@ class PessoaExperienciaController extends Controller
      */
     public function destroy(PessoaExperiencia $pessoaExperiencia)
     {
-        //
+        $pessoaExperiencia->delete();
+        return ['msg' => 'A relação de pessoa e experiência foi removida com sucesso!'];
     }
 }

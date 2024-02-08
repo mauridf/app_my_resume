@@ -83,6 +83,7 @@ class TipoSkillController extends Controller
      */
     public function destroy(TipoSkill $tipoSkill)
     {
-        //
+        $tipoSkill->delete();
+        return ['msg' => 'O tipo skill foi removido com sucesso!'];
     }
 }

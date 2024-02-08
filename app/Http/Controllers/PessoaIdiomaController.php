@@ -83,6 +83,7 @@ class PessoaIdiomaController extends Controller
      */
     public function destroy(PessoaIdioma $pessoaIdioma)
     {
-        //
+        $pessoaIdioma->delete();
+        return ['msg' => 'A relação de pessoa e idioma foi removida com sucesso!'];
     }
 }

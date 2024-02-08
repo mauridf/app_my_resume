@@ -83,6 +83,7 @@ class IdiomaController extends Controller
      */
     public function destroy(Idioma $idioma)
     {
-        //
+        $idioma->delete();
+        return ['msg' => 'O idioma foi removido com sucesso!'];
     }
 }

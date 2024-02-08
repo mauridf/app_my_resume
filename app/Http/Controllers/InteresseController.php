@@ -83,6 +83,7 @@ class InteresseController extends Controller
      */
     public function destroy(Interesse $interesse)
     {
-        //
+        $interesse->delete();
+        return ['msg' => 'O interesse foi removido com sucesso!'];
     }
 }

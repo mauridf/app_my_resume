@@ -83,6 +83,7 @@ class PessoaRedeSocialController extends Controller
      */
     public function destroy(PessoaRedeSocial $pessoaRedeSocial)
     {
-        //
+        $pessoaRedeSocial->delete();
+        return ['msg' => 'A relação de pessoa e rede social foi removida com sucesso!'];
     }
 }

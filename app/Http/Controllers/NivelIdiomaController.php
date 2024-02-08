@@ -83,6 +83,7 @@ class NivelIdiomaController extends Controller
      */
     public function destroy(NivelIdioma $nivelIdioma)
     {
-        //
+        $nivelIdioma->delete();
+        return ['msg' => 'O nível do idioma foi removido com sucesso!'];
     }
 }

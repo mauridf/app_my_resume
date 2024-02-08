@@ -83,6 +83,7 @@ class PessoaSkillController extends Controller
      */
     public function destroy(PessoaSkill $pessoaSkill)
     {
-        //
+        $pessoaSkill->delete();
+        return ['msg' => 'A relação de pessoa e skill foi removida com sucesso!'];
     }
 }

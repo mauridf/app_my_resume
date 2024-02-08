@@ -83,6 +83,7 @@ class SkillController extends Controller
      */
     public function destroy(Skill $skill)
     {
-        //
+        $skill->delete();
+        return ['msg' => 'O skill foi removido com sucesso!'];
     }
 }

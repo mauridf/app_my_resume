@@ -83,6 +83,7 @@ class PessoaCertificacaoController extends Controller
      */
     public function destroy(PessoaCertificacao $pessoaCertificacao)
     {
-        //
+        $pessoaCertificacao->delete();
+        return ['msg' => 'A relação de pessoa e certificado foi removido com sucesso!'];
     }
 }

@@ -83,6 +83,7 @@ class ExperienciaSkillController extends Controller
      */
     public function destroy(ExperienciaSkill $experienciaSkill)
     {
-        //
+        $experienciaSkill->delete();
+        return ['msg' => 'A relação experiência e skill foi removida com sucesso!'];
     }
 }

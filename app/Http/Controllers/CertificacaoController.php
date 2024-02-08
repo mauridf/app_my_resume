@@ -83,6 +83,7 @@ class CertificacaoController extends Controller
      */
     public function destroy(Certificacao $certificacao)
     {
-        //
+        $certificacao->delete();
+        return ['msg' => 'O Certificado foi removido com sucesso!'];
     }
 }

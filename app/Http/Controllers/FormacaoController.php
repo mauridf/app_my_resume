@@ -83,6 +83,7 @@ class FormacaoController extends Controller
      */
     public function destroy(Formacao $formacao)
     {
-        //
+        $formacao->delete();
+        return ['msg' => 'A formação foi removida com sucesso!'];
     }
 }

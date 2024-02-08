@@ -83,6 +83,7 @@ class RedeSocialController extends Controller
      */
     public function destroy(RedeSocial $redeSocial)
     {
-        //
+        $redeSocial->delete();
+        return ['msg' => 'A rede social foi removida com sucesso!'];
     }
 }

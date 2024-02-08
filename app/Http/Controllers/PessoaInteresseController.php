@@ -84,6 +84,7 @@ class PessoaInteresseController extends Controller
      */
     public function destroy(PessoaInteresse $pessoaInteresse)
     {
-        //
+        $pessoaInteresse->delete();
+        return ['msg' => 'A relação de pessoa e interesse foi removida com sucesso!'];
     }
 }

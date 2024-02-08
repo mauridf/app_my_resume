@@ -83,6 +83,7 @@ class ExperienciaController extends Controller
      */
     public function destroy(Experiencia $experiencia)
     {
-        //
+        $experiencia->delete();
+        return ['msg' => 'A experiência foi removida com sucesso!'];
     }
 }
