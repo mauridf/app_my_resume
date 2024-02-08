@@ -20,7 +20,7 @@ class IdiomaController extends Controller
     {
         // $idiomas = Idioma::all();
         $idiomas = $this->idiomas->all();
-        return $idiomas;
+        return response()->json($idiomas,200);
     }
 
     /**
@@ -32,8 +32,9 @@ class IdiomaController extends Controller
     public function store(Request $request)
     {
         // $idioma = Idioma::create($request->all());
+        $request->validate($this->idioma->rules(), $this->idioma->feedback());
         $idioma = $this->idioma->create($request->all());
-        return $idioma;
+        return response()->json($idioma,201);
     }
 
     /**
@@ -45,7 +46,10 @@ class IdiomaController extends Controller
     public function show($id)
     {
         $idioma = $this->idioma->find($id);
-        return $idioma;
+        if($idioma === null) {
+            return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);
+        }
+        return response()->json($idioma,200);
     }
 
     /**
@@ -59,8 +63,32 @@ class IdiomaController extends Controller
     {
         // $idioma->update($request->all());
         $idioma = $this->idioma->find($id);
+
+        if($idioma === null) {
+            return response()->json(['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe'], 404);
+        }
+
+        if($request->method() === 'PATCH') {
+
+            $regrasDinamicas = array();
+
+            //percorrendo todas as regras definidas no Model
+            foreach($idioma->rules() as $input => $regra) {
+                
+                //coletar apenas as regras aplicáveis aos parâmetros parciais da requisição PATCH
+                if(array_key_exists($input, $request->all())) {
+                    $regrasDinamicas[$input] = $regra;
+                }
+            }
+            
+            $request->validate($regrasDinamicas, $idioma->feedback());
+
+        } else {
+            $request->validate($idioma->rules(), $idioma->feedback());
+        }
+
         $idioma->update($request->all());
-        return $idioma;
+        return response()->json($idioma,200);
     }
 
     /**
@@ -73,7 +101,12 @@ class IdiomaController extends Controller
     {
         // $idioma->delete();
         $idioma = $this->idioma->find($id);
+
+        if($idioma === null) {
+            return response()->json(['erro' => 'Impossível realizar a exclusão. O recurso solicitado não existe'], 404);
+        }
+
         $idioma->delete();
-        return ['msg' => 'O idioma foi removido com sucesso!'];
+        return response()->json(['msg' => 'O idioma foi removido com sucesso!'],200);
     }
 }

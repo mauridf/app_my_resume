@@ -10,6 +10,19 @@ class Skill extends Model
     use HasFactory;
     protected $fillable = ['tipo_skill_id','tecnologia','porcentagem_conhecimento'];
 
+    public function rules() {
+        return [
+            'tecnologia' => 'required',
+            'porcentagem_conhecimento' => 'required'
+        ];
+    }
+
+    public function feedback() {
+        return [
+            'required' => 'O campo :attribute é obrigatório'
+        ];
+    }
+
     public function pessoaSkill() {
         return $this->hasMany('App\Models\PessoaSkill');
     }

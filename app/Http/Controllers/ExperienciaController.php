@@ -19,7 +19,7 @@ class ExperienciaController extends Controller
     {
         // $experiencias = Experiencia::all();
         $experiencias = $this->experiencia->all();
-        return $experiencias;
+        return response()->json($experiencias,200);
     }
 
     /**
@@ -31,8 +31,9 @@ class ExperienciaController extends Controller
     public function store(Request $request)
     {
         // $experiencia = Experiencia::create($request->all());
+        $request->validate($this->experiencia->rules(), $this->experiencia->feedback());
         $experiencia = $this->experiencia->create($request->all());
-        return $experiencia;
+        return response()->json($experiencia,201);
     }
 
     /**
@@ -44,7 +45,10 @@ class ExperienciaController extends Controller
     public function show($id)
     {
         $experiencia = $this->experiencia->find($id);
-        return $experiencia;
+        if($experiencia === null) {
+            return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);
+        } 
+        return response()->json($experiencia,200);
     }
 
     /**
@@ -58,8 +62,32 @@ class ExperienciaController extends Controller
     {
         // $experiencia->update($request->all());
         $experiencia = $this->experiencia->find($id);
+
+        if($experiencia === null) {
+            return response()->json(['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe'], 404);
+        }
+
+        if($request->method() === 'PATCH') {
+
+            $regrasDinamicas = array();
+
+            //percorrendo todas as regras definidas no Model
+            foreach($experiencia->rules() as $input => $regra) {
+                
+                //coletar apenas as regras aplicáveis aos parâmetros parciais da requisição PATCH
+                if(array_key_exists($input, $request->all())) {
+                    $regrasDinamicas[$input] = $regra;
+                }
+            }
+            
+            $request->validate($regrasDinamicas, $experiencia->feedback());
+
+        } else {
+            $request->validate($experiencia->rules(), $experiencia->feedback());
+        }
+
         $experiencia->update($request->all());
-        return $experiencia;
+        return response()->json($experiencia,200);
     }
 
     /**
@@ -72,7 +100,12 @@ class ExperienciaController extends Controller
     {
         // $experiencia->delete();
         $experiencia = $this->experiencia->find($id);
+
+        if($experiencia === null) {
+            return response()->json(['erro' => 'Impossível realizar a exclusão. O recurso solicitado não existe'], 404);
+        }
+
         $experiencia->delete();
-        return ['msg' => 'A experiência foi removida com sucesso!'];
+        return response()->json(['msg' => 'A experiência foi removida com sucesso!'],200);
     }
 }

@@ -20,7 +20,7 @@ class TipoSkillController extends Controller
     {
         // $tipoSkill = TipoSkill::all();
         $tipoSkill = $this->tipoSkill->all();
-        return $tipoSkill;
+        return response()->json($tipoSkill,200);
     }
 
     /**
@@ -32,8 +32,9 @@ class TipoSkillController extends Controller
     public function store(Request $request)
     {
         // $tipoSkill = TipoSkill::create($request->all());
+        $request->validate($this->tipoSkill->rules(), $this->tipoSkill->feedback());
         $tipoSkill = $this->tipoSkill->create($request->all());
-        return $tipoSkill;
+        return response()->json($tipoSkill,200);
     }
 
     /**
@@ -45,7 +46,12 @@ class TipoSkillController extends Controller
     public function show($id)
     {
         $tipoSkill = $this->tipoSkill->find($id);
-        return $tipoSkill;
+
+        if($tipoSkill === null) {
+            return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);
+        }
+
+        return response()->json($tipoSkill);
     }
 
     /**
@@ -59,8 +65,32 @@ class TipoSkillController extends Controller
     {
         // $tipoSkill->update($request->all());
         $tipoSkill = $this->tipoSkill->find($id);
+
+        if($tipoSkill === null) {
+            return response()->json(['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe'], 404);
+        }
+
+        if($request->method() === 'PATCH') {
+
+            $regrasDinamicas = array();
+
+            //percorrendo todas as regras definidas no Model
+            foreach($tipoSkill->rules() as $input => $regra) {
+                
+                //coletar apenas as regras aplicáveis aos parâmetros parciais da requisição PATCH
+                if(array_key_exists($input, $request->all())) {
+                    $regrasDinamicas[$input] = $regra;
+                }
+            }
+            
+            $request->validate($regrasDinamicas, $tipoSkill->feedback());
+
+        } else {
+            $request->validate($tipoSkill->rules(), $tipoSkill->feedback());
+        }
+
         $tipoSkill->update($request->all());
-        return $tipoSkill;
+        return response()->json($tipoSkill,200);
     }
 
     /**
@@ -73,6 +103,11 @@ class TipoSkillController extends Controller
     {
         // $tipoSkill->delete();
         $tipoSkill = $this->tipoSkill->find($id);
+
+        if($tipoSkill === null) {
+            return response()->json(['erro' => 'Impossível realizar a exclusão. O recurso solicitado não existe'], 404);
+        }
+
         $tipoSkill->delete();
         return ['msg' => 'O tipo skill foi removido com sucesso!'];
     }

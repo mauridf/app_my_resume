@@ -20,7 +20,7 @@ class FormacaoController extends Controller
     {
         // $formacoes = Formacao::all();
         $formacoes = $this->formacao->all();
-        return $formacoes;
+        return response()->json($formacoes,200);
     }
 
     /**
@@ -32,8 +32,9 @@ class FormacaoController extends Controller
     public function store(Request $request)
     {
         // $formacao = Formacao::create($request->all());
+        $request->validate($this->formacao->rules(), $this->formacao->feedback());
         $formacao = $this->formacao->create($request->all());
-        return $formacao;
+        return response()->json($formacao,200);
     }
 
     /**
@@ -45,7 +46,10 @@ class FormacaoController extends Controller
     public function show($id)
     {
         $formacao = $this->formacao->find($id);
-        return $formacao;
+        if($formacao === null) {
+            return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);
+        }
+        return response()->json($formacao,200);
     }
 
     /**
@@ -59,8 +63,32 @@ class FormacaoController extends Controller
     {
         // $formacao->update($request->all());
         $formacao = $this->formacao->find($id);
+
+        if($formacao === null) {
+            return response()->json(['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe'], 404);
+        }
+
+        if($request->method() === 'PATCH') {
+
+            $regrasDinamicas = array();
+
+            //percorrendo todas as regras definidas no Model
+            foreach($formacao->rules() as $input => $regra) {
+                
+                //coletar apenas as regras aplicáveis aos parâmetros parciais da requisição PATCH
+                if(array_key_exists($input, $request->all())) {
+                    $regrasDinamicas[$input] = $regra;
+                }
+            }
+            
+            $request->validate($regrasDinamicas, $formacao->feedback());
+
+        } else {
+            $request->validate($formacao->rules(), $formacao->feedback());
+        }
+
         $formacao->update($request->all());
-        return $formacao;
+        return response()->json($formacao,200);
     }
 
     /**
@@ -73,7 +101,12 @@ class FormacaoController extends Controller
     {
         // $formacao->delete();
         $formacao = $this->formacao->find($id);
+
+        if($formacao === null) {
+            return response()->json(['erro' => 'Impossível realizar a exclusão. O recurso solicitado não existe'], 404);
+        }
+
         $formacao->delete();
-        return ['msg' => 'A formação foi removida com sucesso!'];
+        return response()->json(['msg' => 'A formação foi removida com sucesso!'],200);
     }
 }

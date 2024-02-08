@@ -20,7 +20,7 @@ class RedeSocialController extends Controller
     {
         // $redesSociais = RedeSocial::all();
         $redesSociais = $this->redesSociais->all();
-        return $redesSociais;
+        return response()->json($redesSociais,200);
     }
 
     /**
@@ -32,8 +32,9 @@ class RedeSocialController extends Controller
     public function store(Request $request)
     {
         // $redeSocial = RedeSocial::create($request->all());
+        $request->validate($this->redeSocial->rules(), $this->redeSocial->feedback());
         $redeSocial = $this->redeSocial->create($request->all());
-        return $redeSocial;
+        return response()->json($redeSocial,200);
     }
 
     /**
@@ -45,7 +46,12 @@ class RedeSocialController extends Controller
     public function show($id)
     {
         $redeSocial = $this->redeSocial->find($id);
-        return $redeSocial;
+
+        if($redeSocial === null) {
+            return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);
+        }
+
+        return response()->json($redeSocial,200);
     }
 
     /**
@@ -59,8 +65,32 @@ class RedeSocialController extends Controller
     {
         // $redeSocial->update($request->all());
         $redeSocial = $this->redeSocial->find($id);
+
+        if($redeSocial === null) {
+            return response()->json(['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe'], 404);
+        }
+
+        if($request->method() === 'PATCH') {
+
+            $regrasDinamicas = array();
+
+            //percorrendo todas as regras definidas no Model
+            foreach($redeSocial->rules() as $input => $regra) {
+                
+                //coletar apenas as regras aplicáveis aos parâmetros parciais da requisição PATCH
+                if(array_key_exists($input, $request->all())) {
+                    $regrasDinamicas[$input] = $regra;
+                }
+            }
+            
+            $request->validate($regrasDinamicas, $redeSocial->feedback());
+
+        } else {
+            $request->validate($redeSocial->rules(), $redeSocial->feedback());
+        }
+
         $redeSocial->update($request->all());
-        return $redeSocial;
+        return response()->json($redeSocial,200);
     }
 
     /**
@@ -73,7 +103,12 @@ class RedeSocialController extends Controller
     {
         // $redeSocial->delete();
         $redeSocial = $this->redeSocial->find($id);
+
+        if($redeSocial === null) {
+            return response()->json(['erro' => 'Impossível realizar a exclusão. O recurso solicitado não existe'], 404);
+        }
+
         $redeSocial->delete();
-        return ['msg' => 'A rede social foi removida com sucesso!'];
+        return response()->json(['msg' => 'A rede social foi removida com sucesso!'],200);
     }
 }

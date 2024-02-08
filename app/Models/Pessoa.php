@@ -10,6 +10,23 @@ class Pessoa extends Model
     use HasFactory;
     protected $fillable = ['nome','email','telefone','endereco','sexo','foto','sumario'];
 
+    public function rules() {
+        return [
+            'nome' => 'required|min:3',
+            'email' => 'required|email',
+            'telefone' => 'required',
+            'endereco' => 'required'
+        ];
+    }
+
+    public function feedback() {
+        return [
+            'required' => 'O campo :attribute é obrigatório',
+            'nome.min' => 'O nome deve ter no mínimo 3 caracteres',
+            'email' => 'O campo dever possuir um e-mail válido'
+        ];
+    }
+
     public function pessoaInteresses() {
         return $this->hasMany('App\Models\PessoaInteresse');
     }

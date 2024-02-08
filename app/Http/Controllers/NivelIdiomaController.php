@@ -20,7 +20,7 @@ class NivelIdiomaController extends Controller
     {
         // $nivelIdiomas = NivelIdioma::all();
         $nivelIdiomas = $this->nivelIdiomas->all();
-        return $nivelIdiomas;
+        return response()->json($nivelIdiomas,200);
     }
 
     /**
@@ -32,8 +32,9 @@ class NivelIdiomaController extends Controller
     public function store(Request $request)
     {
         // $nivelIdioma = NivelIdioma::create($request->all());
+        $request->validate($this->nivelIdioma->rules(), $this->nivelIdioma->feedback());
         $nivelIdioma = $this->nivelIdioma->create($request->all());
-        return $nivelIdioma;
+        return response()->json($nivelIdioma,200);
     }
 
     /**
@@ -45,7 +46,12 @@ class NivelIdiomaController extends Controller
     public function show($id)
     {
         $nivelIdioma = $this->nivelIdioma->find($id);
-        return $nivelIdioma;
+
+        if($nivelIdioma === null) {
+            return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);
+        }
+
+        return response()->json($nivelIdioma,200);
     }
 
     /**
@@ -59,8 +65,32 @@ class NivelIdiomaController extends Controller
     {
         // $nivelIdioma->update($request->all());
         $nivelIdioma = $this->nivelIdioma->find($id);
+
+        if($nivelIdioma === null) {
+            return response()->json(['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe'], 404);
+        }
+
+        if($request->method() === 'PATCH') {
+
+            $regrasDinamicas = array();
+
+            //percorrendo todas as regras definidas no Model
+            foreach($nivelIdioma->rules() as $input => $regra) {
+                
+                //coletar apenas as regras aplicáveis aos parâmetros parciais da requisição PATCH
+                if(array_key_exists($input, $request->all())) {
+                    $regrasDinamicas[$input] = $regra;
+                }
+            }
+            
+            $request->validate($regrasDinamicas, $nivelIdioma->feedback());
+
+        } else {
+            $request->validate($nivelIdioma->rules(), $nivelIdioma->feedback());
+        }
+
         $nivelIdioma->update($request->all());
-        return $nivelIdioma;
+        return response()->json($nivelIdioma,200);
     }
 
     /**
@@ -73,7 +103,12 @@ class NivelIdiomaController extends Controller
     {
         // $nivelIdioma->delete();
         $nivelIdioma = $this->nivelIdioma->find($id);
+
+        if($nivelIdioma === null) {
+            return response()->json(['erro' => 'Impossível realizar a exclusão. O recurso solicitado não existe'], 404);
+        }
+
         $nivelIdioma->delete();
-        return ['msg' => 'O nível do idioma foi removido com sucesso!'];
+        return response()->json(['msg' => 'O nível do idioma foi removido com sucesso!'],200);
     }
 }
