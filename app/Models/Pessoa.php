@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pessoa extends Model
 {
     use HasFactory;
-    protected $fillable = ['nome','email','telefone','endereco','sexo','foto','sumario'];
+    protected $fillable = ['nome','email','telefone','endereco','sexo','imagem','sumario'];
 
     public function rules() {
         return [
