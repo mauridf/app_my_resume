@@ -48,7 +48,7 @@ class PessoaCertificacaoController extends Controller
      */
     public function show(PessoaCertificacao $pessoaCertificacao)
     {
-        //
+        return $pessoaCertificacao;
     }
 
     /**
@@ -71,7 +71,8 @@ class PessoaCertificacaoController extends Controller
      */
     public function update(Request $request, PessoaCertificacao $pessoaCertificacao)
     {
-        //
+        $pessoaCertificacao->update($request->all());
+        return $pessoaCertificacao;
     }
 
     /**

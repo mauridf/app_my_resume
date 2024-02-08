@@ -48,7 +48,7 @@ class RedeSocialController extends Controller
      */
     public function show(RedeSocial $redeSocial)
     {
-        //
+        return $redeSocial;
     }
 
     /**
@@ -71,7 +71,8 @@ class RedeSocialController extends Controller
      */
     public function update(Request $request, RedeSocial $redeSocial)
     {
-        //
+        $redeSocial->update($request->all());
+        return $redeSocial;
     }
 
     /**

@@ -48,7 +48,7 @@ class PessoaIdiomaController extends Controller
      */
     public function show(PessoaIdioma $pessoaIdioma)
     {
-        //
+        return $pessoaIdioma;
     }
 
     /**
@@ -71,7 +71,8 @@ class PessoaIdiomaController extends Controller
      */
     public function update(Request $request, PessoaIdioma $pessoaIdioma)
     {
-        //
+        $pessoaIdioma->update($request->all());
+        return $pessoaIdioma;
     }
 
     /**

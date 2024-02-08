@@ -49,7 +49,7 @@ class PessoaInteresseController extends Controller
      */
     public function show(PessoaInteresse $pessoaInteresse)
     {
-        //
+        return $pessoaInteresse;
     }
 
     /**
@@ -72,7 +72,8 @@ class PessoaInteresseController extends Controller
      */
     public function update(Request $request, PessoaInteresse $pessoaInteresse)
     {
-        //
+        $pessoaInteresse->update($request->all());
+        return $pessoaInteresse;
     }
 
     /**

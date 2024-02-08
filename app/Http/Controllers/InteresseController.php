@@ -48,7 +48,7 @@ class InteresseController extends Controller
      */
     public function show(Interesse $interesse)
     {
-        //
+        return $interesse;
     }
 
     /**
@@ -71,7 +71,8 @@ class InteresseController extends Controller
      */
     public function update(Request $request, Interesse $interesse)
     {
-        //
+        $interesse->update($request->all());
+        return $interesse;
     }
 
     /**

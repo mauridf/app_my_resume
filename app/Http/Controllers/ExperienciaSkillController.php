@@ -48,7 +48,7 @@ class ExperienciaSkillController extends Controller
      */
     public function show(ExperienciaSkill $experienciaSkill)
     {
-        //
+        return $experienciaSkill;
     }
 
     /**
@@ -71,7 +71,8 @@ class ExperienciaSkillController extends Controller
      */
     public function update(Request $request, ExperienciaSkill $experienciaSkill)
     {
-        //
+        $experienciaSkill->update($request->all());
+        return $experienciaSkill;
     }
 
     /**

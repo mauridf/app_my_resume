@@ -48,7 +48,7 @@ class FormacaoController extends Controller
      */
     public function show(Formacao $formacao)
     {
-        //
+        return $formacao;
     }
 
     /**
@@ -71,7 +71,8 @@ class FormacaoController extends Controller
      */
     public function update(Request $request, Formacao $formacao)
     {
-        //
+        $formacao->update($request->all());
+        return $formacao;
     }
 
     /**

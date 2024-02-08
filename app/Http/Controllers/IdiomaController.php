@@ -48,7 +48,7 @@ class IdiomaController extends Controller
      */
     public function show(Idioma $idioma)
     {
-        //
+        return $idioma;
     }
 
     /**
@@ -71,7 +71,8 @@ class IdiomaController extends Controller
      */
     public function update(Request $request, Idioma $idioma)
     {
-        //
+        $idioma->update($request->all());
+        return $idioma;
     }
 
     /**

@@ -48,7 +48,7 @@ class PessoaFormacaoController extends Controller
      */
     public function show(PessoaFormacao $pessoaFormacao)
     {
-        //
+        return $pessoaFormacao;
     }
 
     /**
@@ -71,7 +71,8 @@ class PessoaFormacaoController extends Controller
      */
     public function update(Request $request, PessoaFormacao $pessoaFormacao)
     {
-        //
+        $pessoaFormacao->update($request->all());
+        return $pessoaFormacao;
     }
 
     /**

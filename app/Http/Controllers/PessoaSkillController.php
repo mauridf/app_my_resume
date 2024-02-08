@@ -48,7 +48,7 @@ class PessoaSkillController extends Controller
      */
     public function show(PessoaSkill $pessoaSkill)
     {
-        //
+        return $pessoaSkill;
     }
 
     /**
@@ -71,7 +71,8 @@ class PessoaSkillController extends Controller
      */
     public function update(Request $request, PessoaSkill $pessoaSkill)
     {
-        //
+        $pessoaSkill->update($request->all());
+        return $pessoaSkill;
     }
 
     /**

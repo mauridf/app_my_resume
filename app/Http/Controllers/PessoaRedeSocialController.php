@@ -48,7 +48,7 @@ class PessoaRedeSocialController extends Controller
      */
     public function show(PessoaRedeSocial $pessoaRedeSocial)
     {
-        //
+        return $pessoaRedeSocial;
     }
 
     /**
@@ -71,7 +71,8 @@ class PessoaRedeSocialController extends Controller
      */
     public function update(Request $request, PessoaRedeSocial $pessoaRedeSocial)
     {
-        //
+        $pessoaRedeSocial->update($request->all());
+        return $pessoaRedeSocial;
     }
 
     /**

@@ -48,7 +48,7 @@ class NivelIdiomaController extends Controller
      */
     public function show(NivelIdioma $nivelIdioma)
     {
-        //
+        return $nivelIdioma;
     }
 
     /**
@@ -71,7 +71,8 @@ class NivelIdiomaController extends Controller
      */
     public function update(Request $request, NivelIdioma $nivelIdioma)
     {
-        //
+        $nivelIdioma->update($request->all());
+        return $nivelIdioma;
     }
 
     /**

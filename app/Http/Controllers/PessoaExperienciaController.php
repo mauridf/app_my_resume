@@ -48,7 +48,7 @@ class PessoaExperienciaController extends Controller
      */
     public function show(PessoaExperiencia $pessoaExperiencia)
     {
-        //
+        return $pessoaExperiencia;
     }
 
     /**
@@ -71,7 +71,8 @@ class PessoaExperienciaController extends Controller
      */
     public function update(Request $request, PessoaExperiencia $pessoaExperiencia)
     {
-        //
+        $pessoaExperiencia->update($request->all());
+        return $pessoaExperiencia;
     }
 
     /**

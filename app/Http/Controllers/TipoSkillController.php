@@ -48,7 +48,7 @@ class TipoSkillController extends Controller
      */
     public function show(TipoSkill $tipoSkill)
     {
-        //
+        return $tipoSkill;
     }
 
     /**
@@ -71,7 +71,8 @@ class TipoSkillController extends Controller
      */
     public function update(Request $request, TipoSkill $tipoSkill)
     {
-        //
+        $tipoSkill->update($request->all());
+        return $tipoSkill;
     }
 
     /**

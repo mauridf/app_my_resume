@@ -48,7 +48,7 @@ class PessoaController extends Controller
      */
     public function show(Pessoa $pessoa)
     {
-        //
+        return $pessoa;
     }
 
     /**
@@ -71,7 +71,8 @@ class PessoaController extends Controller
      */
     public function update(Request $request, Pessoa $pessoa)
     {
-        //
+        $pessoa->update($request->all());
+        return $pessoa;
     }
 
     /**
