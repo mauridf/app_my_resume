@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class PessoaController extends Controller
 {
+    public function __construct(Pessoa $pessoa)
+    {
+        $this->pessoa = $pessoa;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,18 +18,9 @@ class PessoaController extends Controller
      */
     public function index()
     {
-        $pessoas = Pessoa::all();
+        // $pessoas = Pessoa::all();
+        $pessoas = $this->pessoa->all();
         return $pessoas;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -36,7 +31,8 @@ class PessoaController extends Controller
      */
     public function store(Request $request)
     {
-        $pessoa = Pessoa::create($request->all());
+        // $pessoa = Pessoa::create($request->all());
+        $pessoa = $this->pessoa->create($request->all());
         return $pessoa;
     }
 
@@ -46,20 +42,10 @@ class PessoaController extends Controller
      * @param  \App\Models\Pessoa  $pessoa
      * @return \Illuminate\Http\Response
      */
-    public function show(Pessoa $pessoa)
+    public function show($id)
     {
+        $pessoa = $this->pessoa->find($id);
         return $pessoa;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Pessoa  $pessoa
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Pessoa $pessoa)
-    {
-        //
     }
 
     /**
@@ -69,8 +55,10 @@ class PessoaController extends Controller
      * @param  \App\Models\Pessoa  $pessoa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pessoa $pessoa)
+    public function update(Request $request, $id)
     {
+        // $pessoa->update($request->all());
+        $pessoa = $this->pessoa->find($id);
         $pessoa->update($request->all());
         return $pessoa;
     }
@@ -81,8 +69,10 @@ class PessoaController extends Controller
      * @param  \App\Models\Pessoa  $pessoa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pessoa $pessoa)
+    public function destroy($id)
     {
+        // $pessoa->delete();
+        $pessoa = $this->pessoa->find($id);
         $pessoa->delete();
         return ['msg' => 'A pessoa foi removida com sucesso!'];
     }

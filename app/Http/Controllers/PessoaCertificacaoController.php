@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class PessoaCertificacaoController extends Controller
 {
+    public function __construct(PessoaCertificacao $pessoaCertificacao)
+    {
+        $this->pessoaCertificacao = $pessoaCertificacao;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,18 +18,9 @@ class PessoaCertificacaoController extends Controller
      */
     public function index()
     {
-        $pessoaCertificacoes = PessoaCertificacao::all();
+        // $pessoaCertificacoes = PessoaCertificacao::all();
+        $pessoaCertificacoes = $this->pessoaCertificacoes->all();
         return $pessoaCertificacoes;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -36,7 +31,8 @@ class PessoaCertificacaoController extends Controller
      */
     public function store(Request $request)
     {
-        $pessoaCertificacao = PessoaCertificacao::create($request->all());
+        // $pessoaCertificacao = PessoaCertificacao::create($request->all());
+        $pessoaCertificacao = $this->pessoaCertificacao->create($request->all());
         return $pessoaCertificacao;
     }
 
@@ -46,20 +42,10 @@ class PessoaCertificacaoController extends Controller
      * @param  \App\Models\PessoaCertificacao  $pessoaCertificacao
      * @return \Illuminate\Http\Response
      */
-    public function show(PessoaCertificacao $pessoaCertificacao)
+    public function show($id)
     {
+        $pessoaCertificacao = $this->pessoaCertificacao->find($id);
         return $pessoaCertificacao;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PessoaCertificacao  $pessoaCertificacao
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PessoaCertificacao $pessoaCertificacao)
-    {
-        //
     }
 
     /**
@@ -69,8 +55,10 @@ class PessoaCertificacaoController extends Controller
      * @param  \App\Models\PessoaCertificacao  $pessoaCertificacao
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PessoaCertificacao $pessoaCertificacao)
+    public function update(Request $request, $id)
     {
+        // $pessoaCertificacao->update($request->all());
+        $pessoaCertificacao = $this->pessoaCertificacao->find($id);
         $pessoaCertificacao->update($request->all());
         return $pessoaCertificacao;
     }
@@ -81,8 +69,10 @@ class PessoaCertificacaoController extends Controller
      * @param  \App\Models\PessoaCertificacao  $pessoaCertificacao
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PessoaCertificacao $pessoaCertificacao)
+    public function destroy($id)
     {
+        // $pessoaCertificacao->delete();
+        $pessoaCertificacao = $this->pessoaCertificacao->find($id);
         $pessoaCertificacao->delete();
         return ['msg' => 'A relação de pessoa e certificado foi removido com sucesso!'];
     }

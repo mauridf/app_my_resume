@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class IdiomaController extends Controller
 {
+    public function __construct(Idioma $idioma)
+    {
+        $this->idioma = $idioma;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,18 +18,9 @@ class IdiomaController extends Controller
      */
     public function index()
     {
-        $idiomas = Idioma::all();
+        // $idiomas = Idioma::all();
+        $idiomas = $this->idiomas->all();
         return $idiomas;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -36,7 +31,8 @@ class IdiomaController extends Controller
      */
     public function store(Request $request)
     {
-        $idioma = Idioma::create($request->all());
+        // $idioma = Idioma::create($request->all());
+        $idioma = $this->idioma->create($request->all());
         return $idioma;
     }
 
@@ -46,20 +42,10 @@ class IdiomaController extends Controller
      * @param  \App\Models\Idioma  $idioma
      * @return \Illuminate\Http\Response
      */
-    public function show(Idioma $idioma)
+    public function show($id)
     {
+        $idioma = $this->idioma->find($id);
         return $idioma;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Idioma  $idioma
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Idioma $idioma)
-    {
-        //
     }
 
     /**
@@ -69,8 +55,10 @@ class IdiomaController extends Controller
      * @param  \App\Models\Idioma  $idioma
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Idioma $idioma)
+    public function update(Request $request, $id)
     {
+        // $idioma->update($request->all());
+        $idioma = $this->idioma->find($id);
         $idioma->update($request->all());
         return $idioma;
     }
@@ -81,8 +69,10 @@ class IdiomaController extends Controller
      * @param  \App\Models\Idioma  $idioma
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Idioma $idioma)
+    public function destroy($id)
     {
+        // $idioma->delete();
+        $idioma = $this->idioma->find($id);
         $idioma->delete();
         return ['msg' => 'O idioma foi removido com sucesso!'];
     }

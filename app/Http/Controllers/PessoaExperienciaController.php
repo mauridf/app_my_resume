@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class PessoaExperienciaController extends Controller
 {
+    public function __construct(PessoaExperiencia $pessoaExperiencia)
+    {
+        $this->pessoaExperiencia = $pessoaExperiencia;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,18 +18,9 @@ class PessoaExperienciaController extends Controller
      */
     public function index()
     {
-        $pessoaExperiencias = PessoaExperiencia::all();
+        // $pessoaExperiencias = PessoaExperiencia::all();
+        $pessoaExperiencias = $this->pessoaExperiencias->all();
         return $pessoaExperiencias;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -36,7 +31,8 @@ class PessoaExperienciaController extends Controller
      */
     public function store(Request $request)
     {
-        $pessoaExperiencia = PessoaExperiencia::create($request->all());
+        // $pessoaExperiencia = PessoaExperiencia::create($request->all());
+        $pessoaExperiencia = $this->pessoaExperiencia->create($request->all());
         return $pessoaExperiencia;
     }
 
@@ -46,20 +42,10 @@ class PessoaExperienciaController extends Controller
      * @param  \App\Models\PessoaExperiencia  $pessoaExperiencia
      * @return \Illuminate\Http\Response
      */
-    public function show(PessoaExperiencia $pessoaExperiencia)
+    public function show($id)
     {
+        $pessoaExperiencia = $this->pessoaExperiencia->find($id);
         return $pessoaExperiencia;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PessoaExperiencia  $pessoaExperiencia
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PessoaExperiencia $pessoaExperiencia)
-    {
-        //
     }
 
     /**
@@ -69,8 +55,10 @@ class PessoaExperienciaController extends Controller
      * @param  \App\Models\PessoaExperiencia  $pessoaExperiencia
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PessoaExperiencia $pessoaExperiencia)
+    public function update(Request $request, $id)
     {
+        // $pessoaExperiencia->update($request->all());
+        $pessoaExperiencia = $this->pessoaExperiencia->find($id);
         $pessoaExperiencia->update($request->all());
         return $pessoaExperiencia;
     }
@@ -81,8 +69,10 @@ class PessoaExperienciaController extends Controller
      * @param  \App\Models\PessoaExperiencia  $pessoaExperiencia
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PessoaExperiencia $pessoaExperiencia)
+    public function destroy($id)
     {
+        // $pessoaExperiencia->delete();
+        $pessoaExperiencia = $this->pessoaExperiencia->find($id);
         $pessoaExperiencia->delete();
         return ['msg' => 'A relação de pessoa e experiência foi removida com sucesso!'];
     }

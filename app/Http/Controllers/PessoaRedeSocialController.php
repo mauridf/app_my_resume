@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class PessoaRedeSocialController extends Controller
 {
+    public function __construct(PessoaRedeSocial $pessoaRedeSocial)
+    {
+        $this->pessoaRedeSocial = $pessoaRedeSocial;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,18 +18,9 @@ class PessoaRedeSocialController extends Controller
      */
     public function index()
     {
-        $pessoaRedesSociais = PessoaRedeSocial::all();
+        // $pessoaRedesSociais = PessoaRedeSocial::all();
+        $pessoaRedesSociais = $this->pessoaRedesSociais->all();
         return $pessoaRedesSociais;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -36,7 +31,8 @@ class PessoaRedeSocialController extends Controller
      */
     public function store(Request $request)
     {
-        $pessoaRedeSocial = PessoaRedeSocial::create($request->all());
+        // $pessoaRedeSocial = PessoaRedeSocial::create($request->all());
+        $pessoaRedeSocial = $this->pessoaRedeSocial->create($request->all());
         return $pessoaRedeSocial;
     }
 
@@ -46,20 +42,10 @@ class PessoaRedeSocialController extends Controller
      * @param  \App\Models\PessoaRedeSocial  $pessoaRedeSocial
      * @return \Illuminate\Http\Response
      */
-    public function show(PessoaRedeSocial $pessoaRedeSocial)
+    public function show($id)
     {
+        $pessoaRedeSocial = $this->pessoaRedeSocial->find($id);
         return $pessoaRedeSocial;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PessoaRedeSocial  $pessoaRedeSocial
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PessoaRedeSocial $pessoaRedeSocial)
-    {
-        //
     }
 
     /**
@@ -69,8 +55,10 @@ class PessoaRedeSocialController extends Controller
      * @param  \App\Models\PessoaRedeSocial  $pessoaRedeSocial
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PessoaRedeSocial $pessoaRedeSocial)
+    public function update(Request $request, $id)
     {
+        // $pessoaRedeSocial->update($request->all());
+        $pessoaRedeSocial = $this->pessoaRedeSocial->find($id);
         $pessoaRedeSocial->update($request->all());
         return $pessoaRedeSocial;
     }
@@ -81,8 +69,10 @@ class PessoaRedeSocialController extends Controller
      * @param  \App\Models\PessoaRedeSocial  $pessoaRedeSocial
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PessoaRedeSocial $pessoaRedeSocial)
+    public function destroy($id)
     {
+        // $pessoaRedeSocial->delete();
+        $pessoaRedeSocial = $this->pessoaRedeSocial->find($id);
         $pessoaRedeSocial->delete();
         return ['msg' => 'A relação de pessoa e rede social foi removida com sucesso!'];
     }

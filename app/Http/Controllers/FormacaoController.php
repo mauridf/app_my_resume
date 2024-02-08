@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class FormacaoController extends Controller
 {
+    public function __construct(Formacao $formacao)
+    {
+        $this->formacao = $formacao;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,18 +18,9 @@ class FormacaoController extends Controller
      */
     public function index()
     {
-        $formacoes = Formacao::all();
+        // $formacoes = Formacao::all();
+        $formacoes = $this->formacao->all();
         return $formacoes;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -36,7 +31,8 @@ class FormacaoController extends Controller
      */
     public function store(Request $request)
     {
-        $formacao = Formacao::create($request->all());
+        // $formacao = Formacao::create($request->all());
+        $formacao = $this->formacao->create($request->all());
         return $formacao;
     }
 
@@ -46,20 +42,10 @@ class FormacaoController extends Controller
      * @param  \App\Models\Formacao  $formacao
      * @return \Illuminate\Http\Response
      */
-    public function show(Formacao $formacao)
+    public function show($id)
     {
+        $formacao = $this->formacao->find($id);
         return $formacao;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Formacao  $formacao
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Formacao $formacao)
-    {
-        //
     }
 
     /**
@@ -69,8 +55,10 @@ class FormacaoController extends Controller
      * @param  \App\Models\Formacao  $formacao
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Formacao $formacao)
+    public function update(Request $request, $id)
     {
+        // $formacao->update($request->all());
+        $formacao = $this->formacao->find($id);
         $formacao->update($request->all());
         return $formacao;
     }
@@ -81,8 +69,10 @@ class FormacaoController extends Controller
      * @param  \App\Models\Formacao  $formacao
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Formacao $formacao)
+    public function destroy($id)
     {
+        // $formacao->delete();
+        $formacao = $this->formacao->find($id);
         $formacao->delete();
         return ['msg' => 'A formação foi removida com sucesso!'];
     }

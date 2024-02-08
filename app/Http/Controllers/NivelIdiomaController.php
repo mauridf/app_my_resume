@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class NivelIdiomaController extends Controller
 {
+    public function __construct(NivelIdioma $nivelIdioma)
+    {
+        $this->nivelIdioma = $nivelIdioma;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,18 +18,9 @@ class NivelIdiomaController extends Controller
      */
     public function index()
     {
-        $nivelIdiomas = NivelIdioma::all();
+        // $nivelIdiomas = NivelIdioma::all();
+        $nivelIdiomas = $this->nivelIdiomas->all();
         return $nivelIdiomas;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -36,7 +31,8 @@ class NivelIdiomaController extends Controller
      */
     public function store(Request $request)
     {
-        $nivelIdioma = NivelIdioma::create($request->all());
+        // $nivelIdioma = NivelIdioma::create($request->all());
+        $nivelIdioma = $this->nivelIdioma->create($request->all());
         return $nivelIdioma;
     }
 
@@ -46,20 +42,10 @@ class NivelIdiomaController extends Controller
      * @param  \App\Models\NivelIdioma  $nivelIdioma
      * @return \Illuminate\Http\Response
      */
-    public function show(NivelIdioma $nivelIdioma)
+    public function show($id)
     {
+        $nivelIdioma = $this->nivelIdioma->find($id);
         return $nivelIdioma;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\NivelIdioma  $nivelIdioma
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(NivelIdioma $nivelIdioma)
-    {
-        //
     }
 
     /**
@@ -69,8 +55,10 @@ class NivelIdiomaController extends Controller
      * @param  \App\Models\NivelIdioma  $nivelIdioma
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, NivelIdioma $nivelIdioma)
+    public function update(Request $request, $id)
     {
+        // $nivelIdioma->update($request->all());
+        $nivelIdioma = $this->nivelIdioma->find($id);
         $nivelIdioma->update($request->all());
         return $nivelIdioma;
     }
@@ -81,8 +69,10 @@ class NivelIdiomaController extends Controller
      * @param  \App\Models\NivelIdioma  $nivelIdioma
      * @return \Illuminate\Http\Response
      */
-    public function destroy(NivelIdioma $nivelIdioma)
+    public function destroy($id)
     {
+        // $nivelIdioma->delete();
+        $nivelIdioma = $this->nivelIdioma->find($id);
         $nivelIdioma->delete();
         return ['msg' => 'O nível do idioma foi removido com sucesso!'];
     }

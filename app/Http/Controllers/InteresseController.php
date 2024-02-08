@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class InteresseController extends Controller
 {
+    public function __construct(Interesse $interesse)
+    {
+        $this->interesse = $interesse;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,18 +18,9 @@ class InteresseController extends Controller
      */
     public function index()
     {
-        $interesses = Interesse::all();
+        // $interesses = Interesse::all();
+        $interesses = $this->interesse->all();
         return $interesses;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -36,7 +31,8 @@ class InteresseController extends Controller
      */
     public function store(Request $request)
     {
-        $interesse = Interesse::create($request->all());
+        // $interesse = Interesse::create($request->all());
+        $interesse = $this->interesse->create($request->all());
         return $interesse;
     }
 
@@ -46,20 +42,10 @@ class InteresseController extends Controller
      * @param  \App\Models\Interesse  $interesse
      * @return \Illuminate\Http\Response
      */
-    public function show(Interesse $interesse)
+    public function show($id)
     {
+        $interesse = $this->interesse->find($id);
         return $interesse;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Interesse  $interesse
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Interesse $interesse)
-    {
-        //
     }
 
     /**
@@ -69,8 +55,10 @@ class InteresseController extends Controller
      * @param  \App\Models\Interesse  $interesse
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Interesse $interesse)
+    public function update(Request $request, $id)
     {
+        // $interesse->update($request->all());
+        $interesse = $this->interesse->find($id);
         $interesse->update($request->all());
         return $interesse;
     }
@@ -81,8 +69,10 @@ class InteresseController extends Controller
      * @param  \App\Models\Interesse  $interesse
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Interesse $interesse)
+    public function destroy($id)
     {
+        // $interesse->delete();
+        $interesse = $this->interesse->find($id);
         $interesse->delete();
         return ['msg' => 'O interesse foi removido com sucesso!'];
     }

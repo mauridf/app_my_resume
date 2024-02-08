@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class PessoaFormacaoController extends Controller
 {
+    public function __construct(PessoaFormacao $pessoaFormacao)
+    {
+        $this->pessoaFormacao = $pessoaFormacao;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,18 +18,9 @@ class PessoaFormacaoController extends Controller
      */
     public function index()
     {
-        $pessoaFormacoes = PessoaFormacao::all();
+        // $pessoaFormacoes = PessoaFormacao::all();
+        $pessoaFormacoes = $this->pessoaFormacoes->all();
         return $pessoaFormacoes;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -36,7 +31,8 @@ class PessoaFormacaoController extends Controller
      */
     public function store(Request $request)
     {
-        $pessoaFormacao = PessoaFormacao::create($request->all());
+        // $pessoaFormacao = PessoaFormacao::create($request->all());
+        $pessoaFormacao = $this->pessoaFormacao->create($request->all());
         return $pessoaFormacao;
     }
 
@@ -46,20 +42,10 @@ class PessoaFormacaoController extends Controller
      * @param  \App\Models\PessoaFormacao  $pessoaFormacao
      * @return \Illuminate\Http\Response
      */
-    public function show(PessoaFormacao $pessoaFormacao)
+    public function show($id)
     {
+        $pessoaFormacao = $this->pessoaFormacao->find($id);
         return $pessoaFormacao;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PessoaFormacao  $pessoaFormacao
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PessoaFormacao $pessoaFormacao)
-    {
-        //
     }
 
     /**
@@ -69,8 +55,10 @@ class PessoaFormacaoController extends Controller
      * @param  \App\Models\PessoaFormacao  $pessoaFormacao
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PessoaFormacao $pessoaFormacao)
+    public function update(Request $request, $id)
     {
+        // $pessoaFormacao->update($request->all());
+        $pessoaFormacao = $this->pessoaFormacao->find($id);
         $pessoaFormacao->update($request->all());
         return $pessoaFormacao;
     }
@@ -81,8 +69,10 @@ class PessoaFormacaoController extends Controller
      * @param  \App\Models\PessoaFormacao  $pessoaFormacao
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PessoaFormacao $pessoaFormacao)
+    public function destroy($id)
     {
+        // $pessoaFormacao->delete();
+        $pessoaFormacao = $this->pessoaFormacao->find($id);
         $pessoaFormacao->delete();
         return ['msg' => 'A relação de pessoa e formação foi removida com sucesso!'];
     }

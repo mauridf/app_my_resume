@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class PessoaIdiomaController extends Controller
 {
+    public function __construct(PessoaIdioma $pessoaIdioma)
+    {
+        $this->pessoaIdioma = $pessoaIdioma;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,18 +18,9 @@ class PessoaIdiomaController extends Controller
      */
     public function index()
     {
-        $pessoaIdiomas = PessoaIdioma::all();
+        // $pessoaIdiomas = PessoaIdioma::all();
+        $pessoaIdiomas = $this->pessoaIdiomas->all();
         return $pessoaIdiomas;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -36,7 +31,8 @@ class PessoaIdiomaController extends Controller
      */
     public function store(Request $request)
     {
-        $pessoaIdioma = PessoaIdioma::create($request->all());
+        // $pessoaIdioma = PessoaIdioma::create($request->all());
+        $pessoaIdioma = $this->pessoaIdioma->create($request->all());
         return $pessoaIdioma;
     }
 
@@ -46,20 +42,10 @@ class PessoaIdiomaController extends Controller
      * @param  \App\Models\PessoaIdioma  $pessoaIdioma
      * @return \Illuminate\Http\Response
      */
-    public function show(PessoaIdioma $pessoaIdioma)
+    public function show($id)
     {
+        $pessoaIdioma = $this->pessoaIdioma->find($id);
         return $pessoaIdioma;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PessoaIdioma  $pessoaIdioma
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PessoaIdioma $pessoaIdioma)
-    {
-        //
     }
 
     /**
@@ -69,8 +55,10 @@ class PessoaIdiomaController extends Controller
      * @param  \App\Models\PessoaIdioma  $pessoaIdioma
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PessoaIdioma $pessoaIdioma)
+    public function update(Request $request, $id)
     {
+        // $pessoaIdioma->update($request->all());
+        $pessoaIdioma = $this->pessoaIdioma->find($id);
         $pessoaIdioma->update($request->all());
         return $pessoaIdioma;
     }
@@ -81,8 +69,10 @@ class PessoaIdiomaController extends Controller
      * @param  \App\Models\PessoaIdioma  $pessoaIdioma
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PessoaIdioma $pessoaIdioma)
+    public function destroy($id)
     {
+        // $pessoaIdioma->delete();
+        $pessoaIdioma = $this->pessoaIdioma->find($id);
         $pessoaIdioma->delete();
         return ['msg' => 'A relação de pessoa e idioma foi removida com sucesso!'];
     }

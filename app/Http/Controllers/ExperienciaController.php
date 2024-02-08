@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class ExperienciaController extends Controller
 {
+    public function __construct(Experiencia $experiencia) {
+        $this->experiencia = $experiencia;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,18 +17,9 @@ class ExperienciaController extends Controller
      */
     public function index()
     {
-        $experiencias = Experiencia::all();
+        // $experiencias = Experiencia::all();
+        $experiencias = $this->experiencia->all();
         return $experiencias;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -36,7 +30,8 @@ class ExperienciaController extends Controller
      */
     public function store(Request $request)
     {
-        $experiencia = Experiencia::create($request->all());
+        // $experiencia = Experiencia::create($request->all());
+        $experiencia = $this->experiencia->create($request->all());
         return $experiencia;
     }
 
@@ -46,20 +41,10 @@ class ExperienciaController extends Controller
      * @param  \App\Models\Experiencia  $experiencia
      * @return \Illuminate\Http\Response
      */
-    public function show(Experiencia $experiencia)
+    public function show($id)
     {
+        $experiencia = $this->experiencia->find($id);
         return $experiencia;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Experiencia  $experiencia
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Experiencia $experiencia)
-    {
-        //
     }
 
     /**
@@ -69,8 +54,10 @@ class ExperienciaController extends Controller
      * @param  \App\Models\Experiencia  $experiencia
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Experiencia $experiencia)
+    public function update(Request $request, $id)
     {
+        // $experiencia->update($request->all());
+        $experiencia = $this->experiencia->find($id);
         $experiencia->update($request->all());
         return $experiencia;
     }
@@ -81,8 +68,10 @@ class ExperienciaController extends Controller
      * @param  \App\Models\Experiencia  $experiencia
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Experiencia $experiencia)
+    public function destroy($id)
     {
+        // $experiencia->delete();
+        $experiencia = $this->experiencia->find($id);
         $experiencia->delete();
         return ['msg' => 'A experiência foi removida com sucesso!'];
     }

@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class ExperienciaSkillController extends Controller
 {
+    public function __construct(ExperienciaSkill $experienciaSkill)
+    {
+        $this->experienciaSkill = $experienciaSkill;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,18 +18,9 @@ class ExperienciaSkillController extends Controller
      */
     public function index()
     {
-        $experienciaSkills = ExperienciaSkill::all();
+        // $experienciaSkills = ExperienciaSkill::all();
+        $experienciaSkills = $this->experienciaSkill->all();
         return $experienciaSkills;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -36,7 +31,8 @@ class ExperienciaSkillController extends Controller
      */
     public function store(Request $request)
     {
-        $experienciaSkill = ExperienciaSkill::create($request->all());
+        // $experienciaSkill = ExperienciaSkill::create($request->all());
+        $experienciaSkill = $this->experienciaSkill->create($request->all());
         return $experienciaSkill;
     }
 
@@ -46,20 +42,10 @@ class ExperienciaSkillController extends Controller
      * @param  \App\Models\ExperienciaSkill  $experienciaSkill
      * @return \Illuminate\Http\Response
      */
-    public function show(ExperienciaSkill $experienciaSkill)
+    public function show($id)
     {
+        $experienciaSkill = $this->experienciaSkill->find($id);
         return $experienciaSkill;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ExperienciaSkill  $experienciaSkill
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ExperienciaSkill $experienciaSkill)
-    {
-        //
     }
 
     /**
@@ -69,8 +55,10 @@ class ExperienciaSkillController extends Controller
      * @param  \App\Models\ExperienciaSkill  $experienciaSkill
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ExperienciaSkill $experienciaSkill)
+    public function update(Request $request, $id)
     {
+        // $experienciaSkill->update($request->all());
+        $experienciaSkill = $this->experienciaSkill->find($id);
         $experienciaSkill->update($request->all());
         return $experienciaSkill;
     }
@@ -81,8 +69,10 @@ class ExperienciaSkillController extends Controller
      * @param  \App\Models\ExperienciaSkill  $experienciaSkill
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ExperienciaSkill $experienciaSkill)
+    public function destroy($id)
     {
+        // $experienciaSkill->delete();
+        $experienciaSkill = $this->experienciaSkill->find($id);
         $experienciaSkill->delete();
         return ['msg' => 'A relação experiência e skill foi removida com sucesso!'];
     }

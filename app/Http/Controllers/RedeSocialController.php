@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class RedeSocialController extends Controller
 {
+    public function __construct(RedeSocial $redeSocial)
+    {
+        $this->redeSocial = $redeSocial;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,18 +18,9 @@ class RedeSocialController extends Controller
      */
     public function index()
     {
-        $redesSociais = RedeSocial::all();
+        // $redesSociais = RedeSocial::all();
+        $redesSociais = $this->redesSociais->all();
         return $redesSociais;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -36,7 +31,8 @@ class RedeSocialController extends Controller
      */
     public function store(Request $request)
     {
-        $redeSocial = RedeSocial::create($request->all());
+        // $redeSocial = RedeSocial::create($request->all());
+        $redeSocial = $this->redeSocial->create($request->all());
         return $redeSocial;
     }
 
@@ -46,20 +42,10 @@ class RedeSocialController extends Controller
      * @param  \App\Models\RedeSocial  $redeSocial
      * @return \Illuminate\Http\Response
      */
-    public function show(RedeSocial $redeSocial)
+    public function show($id)
     {
+        $redeSocial = $this->redeSocial->find($id);
         return $redeSocial;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\RedeSocial  $redeSocial
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(RedeSocial $redeSocial)
-    {
-        //
     }
 
     /**
@@ -69,8 +55,10 @@ class RedeSocialController extends Controller
      * @param  \App\Models\RedeSocial  $redeSocial
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RedeSocial $redeSocial)
+    public function update(Request $request, $id)
     {
+        // $redeSocial->update($request->all());
+        $redeSocial = $this->redeSocial->find($id);
         $redeSocial->update($request->all());
         return $redeSocial;
     }
@@ -81,8 +69,10 @@ class RedeSocialController extends Controller
      * @param  \App\Models\RedeSocial  $redeSocial
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RedeSocial $redeSocial)
+    public function destroy($id)
     {
+        // $redeSocial->delete();
+        $redeSocial = $this->redeSocial->find($id);
         $redeSocial->delete();
         return ['msg' => 'A rede social foi removida com sucesso!'];
     }

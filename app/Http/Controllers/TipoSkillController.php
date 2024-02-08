@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class TipoSkillController extends Controller
 {
+    public function __construct(TipoSkill $tipoSkill)
+    {
+        $this->tipoSkill = $tipoSkill;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,18 +18,9 @@ class TipoSkillController extends Controller
      */
     public function index()
     {
-        $tipoSkill = TipoSkill::all();
+        // $tipoSkill = TipoSkill::all();
+        $tipoSkill = $this->tipoSkill->all();
         return $tipoSkill;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -36,7 +31,8 @@ class TipoSkillController extends Controller
      */
     public function store(Request $request)
     {
-        $tipoSkill = TipoSkill::create($request->all());
+        // $tipoSkill = TipoSkill::create($request->all());
+        $tipoSkill = $this->tipoSkill->create($request->all());
         return $tipoSkill;
     }
 
@@ -46,20 +42,10 @@ class TipoSkillController extends Controller
      * @param  \App\Models\TipoSkill  $tipoSkill
      * @return \Illuminate\Http\Response
      */
-    public function show(TipoSkill $tipoSkill)
+    public function show($id)
     {
+        $tipoSkill = $this->tipoSkill->find($id);
         return $tipoSkill;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\TipoSkill  $tipoSkill
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TipoSkill $tipoSkill)
-    {
-        //
     }
 
     /**
@@ -69,8 +55,10 @@ class TipoSkillController extends Controller
      * @param  \App\Models\TipoSkill  $tipoSkill
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TipoSkill $tipoSkill)
+    public function update(Request $request, $id)
     {
+        // $tipoSkill->update($request->all());
+        $tipoSkill = $this->tipoSkill->find($id);
         $tipoSkill->update($request->all());
         return $tipoSkill;
     }
@@ -81,8 +69,10 @@ class TipoSkillController extends Controller
      * @param  \App\Models\TipoSkill  $tipoSkill
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TipoSkill $tipoSkill)
+    public function destroy($id)
     {
+        // $tipoSkill->delete();
+        $tipoSkill = $this->tipoSkill->find($id);
         $tipoSkill->delete();
         return ['msg' => 'O tipo skill foi removido com sucesso!'];
     }

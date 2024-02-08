@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class PessoaSkillController extends Controller
 {
+    public function __construct(PessoaSkill $pessoaSkill)
+    {
+        $this->pessoaSkill = $pessoaSkill;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,18 +18,9 @@ class PessoaSkillController extends Controller
      */
     public function index()
     {
-        $pessoaSkills = PESSOASKILL::all();
+        // $pessoaSkills = PESSOASKILL::all();
+        $pessoaSkills = $this->pessoaSkill->all();
         return $pessoaSkills;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -36,7 +31,8 @@ class PessoaSkillController extends Controller
      */
     public function store(Request $request)
     {
-        $pessoaSkill = PessoaSkill::create($request->all());
+        // $pessoaSkill = PessoaSkill::create($request->all());
+        $pessoaSkill = $this->pessoaSkill->create($request->all());
         return $pessoaSkill;
     }
 
@@ -46,20 +42,10 @@ class PessoaSkillController extends Controller
      * @param  \App\Models\PessoaSkill  $pessoaSkill
      * @return \Illuminate\Http\Response
      */
-    public function show(PessoaSkill $pessoaSkill)
+    public function show($id)
     {
+        $pessoaSkill = $this->pessoaSkill->find($id);
         return $pessoaSkill;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PessoaSkill  $pessoaSkill
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PessoaSkill $pessoaSkill)
-    {
-        //
     }
 
     /**
@@ -69,8 +55,10 @@ class PessoaSkillController extends Controller
      * @param  \App\Models\PessoaSkill  $pessoaSkill
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PessoaSkill $pessoaSkill)
+    public function update(Request $request, $id)
     {
+        // $pessoaSkill->update($request->all());
+        $pessoaSkill = $this->pessoaSkill->find($id);
         $pessoaSkill->update($request->all());
         return $pessoaSkill;
     }
@@ -81,8 +69,10 @@ class PessoaSkillController extends Controller
      * @param  \App\Models\PessoaSkill  $pessoaSkill
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PessoaSkill $pessoaSkill)
+    public function destroy($id)
     {
+        // $pessoaSkill->delete();
+        $pessoaSkill = $this->pessoaSkill->find($id);
         $pessoaSkill->delete();
         return ['msg' => 'A relação de pessoa e skill foi removida com sucesso!'];
     }

@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class CertificacaoController extends Controller
 {
+    public function __construct(Certificacao $certificacao) {
+        $this->certificacao = $certificacao;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,18 +17,8 @@ class CertificacaoController extends Controller
      */
     public function index()
     {
-        $certificacoes = Certificacao::all();
+        $certificacoes = $this->certificacao->all();
         return $certificacoes;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -36,7 +29,8 @@ class CertificacaoController extends Controller
      */
     public function store(Request $request)
     {
-        $certificacao = Certificacao::create($request->all());
+        // $certificacao = Certificacao::create($request->all());
+        $certificacao = $this->certificacao->create($request->all());
         return $certificacao;
     }
 
@@ -46,20 +40,10 @@ class CertificacaoController extends Controller
      * @param  \App\Models\Certificacao  $certificacao
      * @return \Illuminate\Http\Response
      */
-    public function show(Certificacao $certificacao)
+    public function show($id)
     {
+        $certificacao = $this->certificacao->find($id);
         return $certificacao;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Certificacao  $certificacao
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Certificacao $certificacao)
-    {
-        //
     }
 
     /**
@@ -69,8 +53,10 @@ class CertificacaoController extends Controller
      * @param  \App\Models\Certificacao  $certificacao
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Certificacao $certificacao)
+    public function update(Request $request, $id)
     {
+        // $certificacao->update($request->all());
+        $certificacao = $this->certificacao->find($id);
         $certificacao->update($request->all());
         return $certificacao;
     }
@@ -81,8 +67,10 @@ class CertificacaoController extends Controller
      * @param  \App\Models\Certificacao  $certificacao
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Certificacao $certificacao)
+    public function destroy($id)
     {
+        // $certificacao->delete();
+        $certificacao = $this->certificacao->find($id);
         $certificacao->delete();
         return ['msg' => 'O Certificado foi removido com sucesso!'];
     }

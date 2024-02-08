@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class PessoaInteresseController extends Controller
 {
+    public function __construct(PessoaInteresse $pessoaInteresse)
+    {
+        $this->pessoaInteresse = $pessoaInteresse;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,18 +19,9 @@ class PessoaInteresseController extends Controller
      */
     public function index()
     {
-        $pessoa_interesses = PessoaIdioma::all();
-        return $pessoa_interesses;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        // $pessoaInteresses = PessoaInteresse::all();
+        $pessoaInteresse = $this->pessoaInteresse->all();
+        return $pessoaInteresse;
     }
 
     /**
@@ -37,7 +32,8 @@ class PessoaInteresseController extends Controller
      */
     public function store(Request $request)
     {
-        $pessoaInteresse = PessoaInteresse::create($request->all());
+        // $pessoaInteresse = PessoaInteresse::create($request->all());
+        $pessoaInteresse = $this->pessoaInteresse->create($request->all());
         return $pessoaInteresse;
     }
 
@@ -47,20 +43,10 @@ class PessoaInteresseController extends Controller
      * @param  \App\Models\PessoaInteresse  $pessoaInteresse
      * @return \Illuminate\Http\Response
      */
-    public function show(PessoaInteresse $pessoaInteresse)
+    public function show($id)
     {
+        $pessoaInteresse = $this->pessoaInteresse->find($id);
         return $pessoaInteresse;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PessoaInteresse  $pessoaInteresse
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PessoaInteresse $pessoaInteresse)
-    {
-        //
     }
 
     /**
@@ -70,8 +56,10 @@ class PessoaInteresseController extends Controller
      * @param  \App\Models\PessoaInteresse  $pessoaInteresse
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PessoaInteresse $pessoaInteresse)
+    public function update(Request $request, $id)
     {
+        // $pessoaInteresse->update($request->all());
+        $pessoaInteresse = $this->pessoaInteresse->find($id);
         $pessoaInteresse->update($request->all());
         return $pessoaInteresse;
     }
@@ -82,8 +70,10 @@ class PessoaInteresseController extends Controller
      * @param  \App\Models\PessoaInteresse  $pessoaInteresse
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PessoaInteresse $pessoaInteresse)
+    public function destroy($id)
     {
+        // $pessoaInteresse->delete();
+        $pessoaInteresse = $this->pessoaInteresse->find($id);
         $pessoaInteresse->delete();
         return ['msg' => 'A relação de pessoa e interesse foi removida com sucesso!'];
     }
