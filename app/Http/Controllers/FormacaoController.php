@@ -14,7 +14,8 @@ class FormacaoController extends Controller
      */
     public function index()
     {
-        //
+        $formacoes = Formacao::all();
+        return $formacoes;
     }
 
     /**

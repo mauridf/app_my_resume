@@ -14,7 +14,8 @@ class IdiomaController extends Controller
      */
     public function index()
     {
-        //
+        $idiomas = Idioma::all();
+        return $idiomas;
     }
 
     /**

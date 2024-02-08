@@ -15,7 +15,13 @@ class CreatePessoaSkillsTable extends Migration
     {
         Schema::create('pessoa_skills', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('pessoa_id');
+            $table->unsignedBigInteger('skill_id');
             $table->timestamps();
+
+            //foreign key (constraints)
+            $table->foreign('pessoa_id')->references('id')->on('pessoas');
+            $table->foreign('skill_id')->references('id')->on('skill');
         });
     }
 

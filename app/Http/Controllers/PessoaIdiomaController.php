@@ -14,7 +14,8 @@ class PessoaIdiomaController extends Controller
      */
     public function index()
     {
-        //
+        $pessoaIdiomas = PessoaIdioma::all();
+        return $pessoaIdiomas;
     }
 
     /**

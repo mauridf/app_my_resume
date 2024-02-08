@@ -14,7 +14,8 @@ class PessoaFormacaoController extends Controller
      */
     public function index()
     {
-        //
+        $pessoaFormacoes = PessoaFormacao::all();
+        return $pessoaFormacoes;
     }
 
     /**

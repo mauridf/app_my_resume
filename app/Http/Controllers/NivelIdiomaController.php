@@ -14,7 +14,8 @@ class NivelIdiomaController extends Controller
      */
     public function index()
     {
-        //
+        $nivelIdiomas = NivelIdioma::all();
+        return $nivelIdiomas;
     }
 
     /**

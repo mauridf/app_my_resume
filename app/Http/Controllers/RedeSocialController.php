@@ -14,7 +14,8 @@ class RedeSocialController extends Controller
      */
     public function index()
     {
-        //
+        $redesSociais = RedeSocial::all();
+        return $redesSociais;
     }
 
     /**

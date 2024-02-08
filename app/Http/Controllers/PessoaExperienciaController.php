@@ -14,7 +14,8 @@ class PessoaExperienciaController extends Controller
      */
     public function index()
     {
-        //
+        $pessoaExperiencias = PessoaExperiencia::all();
+        return $pessoaExperiencias;
     }
 
     /**

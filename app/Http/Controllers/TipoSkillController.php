@@ -14,7 +14,8 @@ class TipoSkillController extends Controller
      */
     public function index()
     {
-        //
+        $tipoSkill = TipoSkill::all();
+        return $tipoSkill;
     }
 
     /**

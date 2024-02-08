@@ -14,7 +14,8 @@ class InteresseController extends Controller
      */
     public function index()
     {
-        //
+        $interesses = Interesse::all();
+        return $interesses;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PessoaIdioma;
 use App\Models\PessoaInteresse;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class PessoaInteresseController extends Controller
      */
     public function index()
     {
-        //
+        $pessoa_interesses = PessoaIdioma::all();
+        return $pessoa_interesses;
     }
 
     /**

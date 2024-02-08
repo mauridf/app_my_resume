@@ -14,7 +14,8 @@ class PessoaController extends Controller
      */
     public function index()
     {
-        //
+        $pessoas = Pessoa::all();
+        return $pessoas;
     }
 
     /**

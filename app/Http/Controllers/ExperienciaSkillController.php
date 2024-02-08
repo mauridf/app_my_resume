@@ -14,7 +14,8 @@ class ExperienciaSkillController extends Controller
      */
     public function index()
     {
-        //
+        $experienciaSkills = ExperienciaSkill::all();
+        return $experienciaSkills;
     }
 
     /**

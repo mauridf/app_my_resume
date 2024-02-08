@@ -14,7 +14,8 @@ class PessoaCertificacaoController extends Controller
      */
     public function index()
     {
-        //
+        $pessoaCertificacoes = PessoaCertificacao::all();
+        return $pessoaCertificacoes;
     }
 
     /**

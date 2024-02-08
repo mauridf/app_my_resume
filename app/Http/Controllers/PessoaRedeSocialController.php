@@ -14,7 +14,8 @@ class PessoaRedeSocialController extends Controller
      */
     public function index()
     {
-        //
+        $pessoaRedesSociais = PessoaRedeSocial::all();
+        return $pessoaRedesSociais;
     }
 
     /**

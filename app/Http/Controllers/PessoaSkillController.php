@@ -14,7 +14,8 @@ class PessoaSkillController extends Controller
      */
     public function index()
     {
-        //
+        $pessoaSkills = PESSOASKILL::all();
+        return $pessoaSkills;
     }
 
     /**
