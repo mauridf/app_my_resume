@@ -13,21 +13,6 @@ O Sistema faz os seguintes Cadastros:
 - Experiência (As experiências que a pessoa possui)
 
 Com todas as informações cadastradas é possível gerar o CV em PDF ao final e sempre que possível alterar todas as informações.
-
-## Passo a passo da criação do sistema
-
-- Criar o projeto com o comando do composer
-- Rodar para ver se foi criado corretamente
-- Criar as Models, Migrations e Controllers
-- Configurar as conexões de Banco no .env
-- Se não tiver criado ainda, criar a base de dados
-- Executar o comando migrate para criar as tabelas de acordo com o que foi implementado na(s) migration(s).
-- Configurar o arquivo api.php em Routes com as rotas dos endpoints que serão criados.
-- Implementar os Endpoints na(s) Controller(s)
-- Depois de testar os Endpoints no Postman e ajustar o que for necessário.
-- Fazer a instalação dos módulos npm e vue.js e vuex
-- Fazer a instalação dos componentes do jwt para poder criar a autenticação por token
-- Implementar o fontend
   
 ## Tecnologias Utilizadas
 
