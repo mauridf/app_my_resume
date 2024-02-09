@@ -18,7 +18,7 @@ class ExperienciaController extends Controller
     public function index()
     {
         // $experiencias = Experiencia::all();
-        $experiencias = $this->experiencia->all();
+        $experiencias = $this->experiencia->with('pessoaExperiencia','experienciaSkill')->get();
         return response()->json($experiencias,200);
     }
 
@@ -44,7 +44,7 @@ class ExperienciaController extends Controller
      */
     public function show($id)
     {
-        $experiencia = $this->experiencia->find($id);
+        $experiencia = $this->experiencia->with('pessoaExperiencia','experienciaSkill')->find($id);
         if($experiencia === null) {
             return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);
         } 

@@ -19,7 +19,7 @@ class NivelIdiomaController extends Controller
     public function index()
     {
         // $nivelIdiomas = NivelIdioma::all();
-        $nivelIdiomas = $this->nivelIdiomas->all();
+        $nivelIdiomas = $this->nivelIdioma->with('pessoaIdiomas')->get();
         return response()->json($nivelIdiomas,200);
     }
 
@@ -45,7 +45,7 @@ class NivelIdiomaController extends Controller
      */
     public function show($id)
     {
-        $nivelIdioma = $this->nivelIdioma->find($id);
+        $nivelIdioma = $this->nivelIdioma->with('pessoaIdiomas')->find($id);
 
         if($nivelIdioma === null) {
             return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);

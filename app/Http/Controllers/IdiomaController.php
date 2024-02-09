@@ -19,7 +19,7 @@ class IdiomaController extends Controller
     public function index()
     {
         // $idiomas = Idioma::all();
-        $idiomas = $this->idiomas->all();
+        $idiomas = $this->idioma->with('pessoaIdiomas')->get();
         return response()->json($idiomas,200);
     }
 
@@ -45,7 +45,7 @@ class IdiomaController extends Controller
      */
     public function show($id)
     {
-        $idioma = $this->idioma->find($id);
+        $idioma = $this->idioma->with('pessoaIdiomas')->find($id);
         if($idioma === null) {
             return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);
         }

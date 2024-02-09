@@ -19,7 +19,7 @@ class RedeSocialController extends Controller
     public function index()
     {
         // $redesSociais = RedeSocial::all();
-        $redesSociais = $this->redesSociais->all();
+        $redesSociais = $this->redeSocial->with('pessoaRedesSociais')->get();
         return response()->json($redesSociais,200);
     }
 
@@ -45,7 +45,7 @@ class RedeSocialController extends Controller
      */
     public function show($id)
     {
-        $redeSocial = $this->redeSocial->find($id);
+        $redeSocial = $this->redeSocial->with('pessoaRedesSociais')->find($id);
 
         if($redeSocial === null) {
             return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);

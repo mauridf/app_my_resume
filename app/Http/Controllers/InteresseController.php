@@ -19,7 +19,7 @@ class InteresseController extends Controller
     public function index()
     {
         // $interesses = Interesse::all();
-        $interesses = $this->interesse->all();
+        $interesses = $this->interesse->with('pessoaInteresses')->get();
         return response()->json($interesses,200);
     }
 
@@ -45,7 +45,7 @@ class InteresseController extends Controller
      */
     public function show($id)
     {
-        $interesse = $this->interesse->find($id);
+        $interesse = $this->interesse->with('pessoaInteresses')->find($id);
 
         if($interesse === null) {
             return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);

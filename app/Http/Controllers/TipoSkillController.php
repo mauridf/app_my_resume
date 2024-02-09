@@ -19,7 +19,7 @@ class TipoSkillController extends Controller
     public function index()
     {
         // $tipoSkill = TipoSkill::all();
-        $tipoSkill = $this->tipoSkill->all();
+        $tipoSkill = $this->tipoSkill->with('skill')->get();
         return response()->json($tipoSkill,200);
     }
 
@@ -45,7 +45,7 @@ class TipoSkillController extends Controller
      */
     public function show($id)
     {
-        $tipoSkill = $this->tipoSkill->find($id);
+        $tipoSkill = $this->tipoSkill->with('skill')->find($id);
 
         if($tipoSkill === null) {
             return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);

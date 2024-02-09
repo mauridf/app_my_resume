@@ -17,7 +17,8 @@ class CertificacaoController extends Controller
      */
     public function index()
     {
-        $certificacoes = $this->certificacao->all();
+        // $certificacoes = $this->certificacao->all();
+        $certificacoes = $this->certificacao->with('pessoaCertificacao')->get();
         return response()->json($certificacoes, 200);
     }
 
@@ -43,7 +44,7 @@ class CertificacaoController extends Controller
      */
     public function show($id)
     {
-        $certificacao = $this->certificacao->find($id);
+        $certificacao = $this->certificacao->with('pessoaCertificacao')->find($id);
         if($certificacao === null) {
             return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);
         } 

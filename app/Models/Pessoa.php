@@ -15,7 +15,8 @@ class Pessoa extends Model
             'nome' => 'required|min:3',
             'email' => 'required|email',
             'telefone' => 'required',
-            'endereco' => 'required'
+            'endereco' => 'required',
+            'imagem' => 'required|file|mimes:png,jpeg,jpg'
         ];
     }
 
@@ -23,7 +24,8 @@ class Pessoa extends Model
         return [
             'required' => 'O campo :attribute é obrigatório',
             'nome.min' => 'O nome deve ter no mínimo 3 caracteres',
-            'email' => 'O campo dever possuir um e-mail válido'
+            'email' => 'O campo dever possuir um e-mail válido',
+            'imagem.mimes' => 'O arquivo deve ser uma imagem do tipo PNG ou JPG'
         ];
     }
 

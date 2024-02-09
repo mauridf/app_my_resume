@@ -19,7 +19,7 @@ class SkillController extends Controller
     public function index()
     {
         // $skills = SKILL::all();
-        $skills = $this->skills->all();
+        $skills = $this->skill->with('pessoaSkill')->get();
         return response()->json($skills,200);
     }
 
@@ -45,7 +45,7 @@ class SkillController extends Controller
      */
     public function show($id)
     {
-        $skill = $this->skill->find($id);
+        $skill = $this->skill->with('pessoaSkill')->find($id);
 
         if($skill === null) {
             return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);

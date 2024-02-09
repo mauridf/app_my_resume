@@ -20,7 +20,8 @@ class PessoaController extends Controller
     public function index()
     {
         // $pessoas = Pessoa::all();
-        $pessoas = $this->pessoa->all();
+        // $pessoas = $this->pessoa->all();
+        $pessoas = $this->pessoa->with('pessoaInteresses','pessoaCertificacao','pessoaFormacao','pessoaRedesSociais','pessoaIdiomas','pessoaSkill','pessoaExperiencia')->get();
         return response()->json($pessoas,200);
     }
 
@@ -59,7 +60,7 @@ class PessoaController extends Controller
      */
     public function show($id)
     {
-        $pessoa = $this->pessoa->find($id);
+        $pessoa = $this->pessoa->with('pessoaInteresses','pessoaCertificacao','pessoaFormacao','pessoaRedesSociais','pessoaIdiomas','pessoaSkill','pessoaExperiencia')->find($id);
 
         if($pessoa === null) {
             return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);

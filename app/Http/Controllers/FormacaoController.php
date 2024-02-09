@@ -19,7 +19,7 @@ class FormacaoController extends Controller
     public function index()
     {
         // $formacoes = Formacao::all();
-        $formacoes = $this->formacao->all();
+        $formacoes = $this->formacao->with('pessoaFormacao')->get();
         return response()->json($formacoes,200);
     }
 
@@ -45,7 +45,7 @@ class FormacaoController extends Controller
      */
     public function show($id)
     {
-        $formacao = $this->formacao->find($id);
+        $formacao = $this->formacao->with('pessoaFormacao')->find($id);
         if($formacao === null) {
             return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);
         }
