@@ -83,13 +83,15 @@ class TipoSkillController extends Controller
                 }
             }
             
-            $request->validate($regrasDinamicas, $tipoSkill->feedback());
+            // $request->validate($regrasDinamicas, $tipoSkill->feedback());
 
         } else {
-            $request->validate($tipoSkill->rules(), $tipoSkill->feedback());
+            // $request->validate($tipoSkill->rules(), $tipoSkill->feedback());
         }
 
-        $tipoSkill->update($request->all());
+        $tipoSkill->fill($request->all());
+        $tipoSkill->save();
+        // $tipoSkill->update($request->all());
         return response()->json($tipoSkill,200);
     }
 

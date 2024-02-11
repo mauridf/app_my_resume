@@ -80,12 +80,14 @@ class ExperienciaController extends Controller
                 }
             }
             
-            $request->validate($regrasDinamicas, $experiencia->feedback());
+            // $request->validate($regrasDinamicas, $experiencia->feedback());
 
         } else {
-            $request->validate($experiencia->rules(), $experiencia->feedback());
+            // $request->validate($experiencia->rules(), $experiencia->feedback());
         }
 
+        $experiencia->fill($request->all());
+        $experiencia->save();
         $experiencia->update($request->all());
         return response()->json($experiencia,200);
     }

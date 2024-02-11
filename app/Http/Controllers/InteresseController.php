@@ -83,13 +83,15 @@ class InteresseController extends Controller
                 }
             }
             
-            $request->validate($regrasDinamicas, $interesse->feedback());
+            // $request->validate($regrasDinamicas, $interesse->feedback());
 
         } else {
-            $request->validate($interesse->rules(), $interesse->feedback());
+            // $request->validate($interesse->rules(), $interesse->feedback());
         }
 
-        $interesse->update($request->all());
+        $interesse->fill($request->all());
+        $interesse->save();
+        // $interesse->update($request->all());
         return response()->json($interesse,200);
     }
 

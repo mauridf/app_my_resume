@@ -83,13 +83,15 @@ class NivelIdiomaController extends Controller
                 }
             }
             
-            $request->validate($regrasDinamicas, $nivelIdioma->feedback());
+            // $request->validate($regrasDinamicas, $nivelIdioma->feedback());
 
         } else {
-            $request->validate($nivelIdioma->rules(), $nivelIdioma->feedback());
+            // $request->validate($nivelIdioma->rules(), $nivelIdioma->feedback());
         }
 
-        $nivelIdioma->update($request->all());
+        $nivelIdioma->fill($request->all());
+        $nivelIdioma->save();
+        // $nivelIdioma->update($request->all());
         return response()->json($nivelIdioma,200);
     }
 

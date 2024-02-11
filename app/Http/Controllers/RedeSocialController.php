@@ -83,13 +83,15 @@ class RedeSocialController extends Controller
                 }
             }
             
-            $request->validate($regrasDinamicas, $redeSocial->feedback());
+            // $request->validate($regrasDinamicas, $redeSocial->feedback());
 
         } else {
-            $request->validate($redeSocial->rules(), $redeSocial->feedback());
+            // $request->validate($redeSocial->rules(), $redeSocial->feedback());
         }
 
-        $redeSocial->update($request->all());
+        $redeSocial->fill($request->all());
+        $redeSocial->save();
+        // $redeSocial->update($request->all());
         return response()->json($redeSocial,200);
     }
 

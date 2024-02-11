@@ -81,13 +81,15 @@ class FormacaoController extends Controller
                 }
             }
             
-            $request->validate($regrasDinamicas, $formacao->feedback());
+            // $request->validate($regrasDinamicas, $formacao->feedback());
 
         } else {
-            $request->validate($formacao->rules(), $formacao->feedback());
+            // $request->validate($formacao->rules(), $formacao->feedback());
         }
-
-        $formacao->update($request->all());
+        
+        $formacao->fill($request->all());
+        $formacao->save();
+        // $formacao->update($request->all());
         return response()->json($formacao,200);
     }
 

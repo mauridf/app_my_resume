@@ -80,11 +80,11 @@ class PessoaController extends Controller
     {
         // $pessoa->update($request->all());
         $pessoa = $this->pessoa->find($id);
-
+        
         if($pessoa === null) {
             return response()->json(['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe'], 404);
         }
-
+        
         if($request->method() === 'PATCH') {
 
             $regrasDinamicas = array();
@@ -98,15 +98,14 @@ class PessoaController extends Controller
                 }
             }
             
-            $request->validate($regrasDinamicas, $pessoa->feedback());
+            // $request->validate($regrasDinamicas);
 
         } else {
-            $request->validate($pessoa->rules(), $pessoa->feedback());
+            // $request->validate($pessoa->rules());
         }
-
         //preenchendo o objeto $pessoa com todos os dados do request
         $pessoa->fill($request->all());
-
+        
         //se a imagem foi encaminhada na requisição
         if($request->file('imagem')) {
             //remove o arquivo antigo
@@ -116,7 +115,7 @@ class PessoaController extends Controller
             $imagem_urn = $imagem->store('imagens', 'public');
             $pessoa->imagem = $imagem_urn;
         }
-
+        // dd($pessoa);
         // $pessoa->update($request->all());
         $pessoa->save();
         return response()->json($pessoa,200);

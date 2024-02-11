@@ -80,13 +80,14 @@ class CertificacaoController extends Controller
                 }
             }
             
-            $request->validate($regrasDinamicas, $certificacao->feedback());
+            // $request->validate($regrasDinamicas, $certificacao->feedback());
 
         } else {
-            $request->validate($certificacao->rules(), $certificacao->feedback());
+            // $request->validate($certificacao->rules(), $certificacao->feedback());
         }
-
-        $certificacao->update($request->all());
+        $certificacao->fill($request->all());
+        $certificacao->save();
+        // $certificacao->update($request->all());
         return response()->json($certificacao, 200);
     }
 

@@ -83,13 +83,15 @@ class SkillController extends Controller
                 }
             }
             
-            $request->validate($regrasDinamicas, $skill->feedback());
+            // $request->validate($regrasDinamicas, $skill->feedback());
 
         } else {
-            $request->validate($skill->rules(), $skill->feedback());
+            // $request->validate($skill->rules(), $skill->feedback());
         }
 
-        $skill->update($request->all());
+        $skill->fill($request->all());
+        $skill->save();
+        // $skill->update($request->all());
         return response()->json($skill,200);
     }
 

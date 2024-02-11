@@ -81,13 +81,15 @@ class IdiomaController extends Controller
                 }
             }
             
-            $request->validate($regrasDinamicas, $idioma->feedback());
+            // $request->validate($regrasDinamicas, $idioma->feedback());
 
         } else {
-            $request->validate($idioma->rules(), $idioma->feedback());
+            // $request->validate($idioma->rules(), $idioma->feedback());
         }
 
-        $idioma->update($request->all());
+        $idioma->fill($request->all());
+        $idioma->save();
+        // $idioma->update($request->all());
         return response()->json($idioma,200);
     }
 
