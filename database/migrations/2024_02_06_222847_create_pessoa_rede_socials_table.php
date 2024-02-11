@@ -22,7 +22,7 @@ class CreatePessoaRedeSocialsTable extends Migration
 
             //foreign key (constraints)
             $table->foreign('pessoa_id')->references('id')->on('pessoas');
-            $table->foreign('redes_sociais_id')->references('id')->on('redes_sociais');
+            $table->foreign('rede_social_id')->references('id')->on('redes_sociais');
         });
     }
 
