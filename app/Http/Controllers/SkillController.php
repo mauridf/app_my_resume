@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Skill;
 use Illuminate\Http\Request;
+use App\Repositories\SkillRepository;
 
 class SkillController extends Controller
 {
@@ -16,11 +17,29 @@ class SkillController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // $skills = SKILL::all();
-        $skills = $this->skill->with('pessoaSkill')->get();
-        return response()->json($skills,200);
+        // $skills = $this->skill->with('pessoaSkill')->get();
+        // return response()->json($skills,200);
+        $skillRepository = new SkillRepository($this->skill);
+
+        if($request->has('atributos_tipoSkills')) {
+            $atributos_tipoSkills = 'pessoaSkill:id,'.$request->atributos_tiposkills;
+            $skillRepository->selectAtributosRegistrosRelacionados($atributos_tipoSkills);
+        } else {
+            $skillRepository->selectAtributosRegistrosRelacionados('pessoaSkill');
+        }
+
+        if($request->has('filtro')) {
+            $skillRepository->filtro($request->filtro);
+        }
+
+        if($request->has('atributos')) {
+            $skillRepository->selectAtributos($request->atributos);
+        } 
+
+        return response()->json($skillRepository->getResultadoPaginado(3), 200);
     }
 
     /**

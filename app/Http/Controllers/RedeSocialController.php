@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\RedeSocial;
 use Illuminate\Http\Request;
+use App\Repositories\RedeSocialRepository;
 
 class RedeSocialController extends Controller
 {
@@ -16,11 +17,29 @@ class RedeSocialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // $redesSociais = RedeSocial::all();
-        $redesSociais = $this->redeSocial->with('pessoaRedesSociais')->get();
-        return response()->json($redesSociais,200);
+        // $redesSociais = $this->redeSocial->with('pessoaRedesSociais')->get();
+        // return response()->json($redesSociais,200);
+        $redeSocialRepository = new RedeSocialRepository($this->redeSocial);
+
+        if($request->has('atributos_pessoaRedesSociais')) {
+            $atributos_pessoaRedesSociais = 'pessoaRedesSociais:id,'.$request->atributos_pessoaRedesSociais;
+            $redeSocialRepository->selectAtributosRegistrosRelacionados($atributos_pessoaRedesSociais);
+        } else {
+            $redeSocialRepository->selectAtributosRegistrosRelacionados('pessoaRedesSociais');
+        }
+
+        if($request->has('filtro')) {
+            $redeSocialRepository->filtro($request->filtro);
+        }
+
+        if($request->has('atributos')) {
+            $redeSocialRepository->selectAtributos($request->atributos);
+        } 
+
+        return response()->json($redeSocialRepository->getResultadoPaginado(3), 200);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Idioma;
 use Illuminate\Http\Request;
+use App\Repositories\IdiomaRepository;
 
 class IdiomaController extends Controller
 {
@@ -16,11 +17,29 @@ class IdiomaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // $idiomas = Idioma::all();
-        $idiomas = $this->idioma->with('pessoaIdiomas')->get();
-        return response()->json($idiomas,200);
+        // $idiomas = $this->idioma->with('pessoaIdiomas')->get();
+        // return response()->json($idiomas,200);
+        $idiomaRepository = new IdiomaRepository($this->idioma);
+
+        if($request->has('atributos_pessoaIdiomas')) {
+            $atributos_pessoaIdiomas = 'pessoaIdiomas:id,'.$request->atributos_pessoaIdiomas;
+            $idiomaRepository->selectAtributosRegistrosRelacionados($atributos_pessoaIdiomas);
+        } else {
+            $idiomaRepository->selectAtributosRegistrosRelacionados('pessoaIdiomas');
+        }
+
+        if($request->has('filtro')) {
+            $idiomaRepository->filtro($request->filtro);
+        }
+
+        if($request->has('atributos')) {
+            $idiomaRepository->selectAtributos($request->atributos);
+        } 
+
+        return response()->json($idiomaRepository->getResultadoPaginado(3), 200);
     }
 
     /**

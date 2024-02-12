@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Formacao;
 use Illuminate\Http\Request;
+use App\Repositories\FormacaoRepository;
 
 class FormacaoController extends Controller
 {
@@ -16,11 +17,29 @@ class FormacaoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // $formacoes = Formacao::all();
-        $formacoes = $this->formacao->with('pessoaFormacao')->get();
-        return response()->json($formacoes,200);
+        // $formacoes = $this->formacao->with('pessoaFormacao')->get();
+        // return response()->json($formacoes,200);
+        $formacaoRepository = new FormacaoRepository($this->formacao);
+
+        if($request->has('atributos_pessoaFormacao')) {
+            $atributos_pessoaFormacao = 'pessoaFormacao:id,'.$request->atributos_pessoaFormacao;
+            $formacaoRepository->selectAtributosRegistrosRelacionados($atributos_pessoaFormacao);
+        } else {
+            $formacaoRepository->selectAtributosRegistrosRelacionados('pessoaFormacao');
+        }
+
+        if($request->has('filtro')) {
+            $formacaoRepository->filtro($request->filtro);
+        }
+
+        if($request->has('atributos')) {
+            $formacaoRepository->selectAtributos($request->atributos);
+        } 
+
+        return response()->json($formacaoRepository->getResultadoPaginado(3), 200);
     }
 
     /**

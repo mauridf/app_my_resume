@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Interesse;
 use Illuminate\Http\Request;
+use App\Repositories\InteresseRepository;
 
 class InteresseController extends Controller
 {
@@ -16,11 +17,29 @@ class InteresseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // $interesses = Interesse::all();
-        $interesses = $this->interesse->with('pessoaInteresses')->get();
-        return response()->json($interesses,200);
+        // $interesses = $this->interesse->with('pessoaInteresses')->get();
+        // return response()->json($interesses,200);
+        $interesseRepository = new InteresseRepository($this->interesse);
+
+        if($request->has('atributos_pessoaInteresses')) {
+            $atributos_pessoaInteresses = 'pessoaInteresses:id,'.$request->atributos_pessoaInteresses;
+            $interesseRepository->selectAtributosRegistrosRelacionados($atributos_pessoaInteresses);
+        } else {
+            $interesseRepository->selectAtributosRegistrosRelacionados('pessoaInteresses');
+        }
+
+        if($request->has('filtro')) {
+            $interesseRepository->filtro($request->filtro);
+        }
+
+        if($request->has('atributos')) {
+            $interesseRepository->selectAtributos($request->atributos);
+        } 
+
+        return response()->json($interesseRepository->getResultadoPaginado(3), 200);
     }
 
     /**

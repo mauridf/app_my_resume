@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Certificacao;
+use App\Repositories\CertificacaoRepository;
 use Illuminate\Http\Request;
+use App\Repositories\CertificacaoRepositoryRepository;
 
 class CertificacaoController extends Controller
 {
@@ -15,11 +17,29 @@ class CertificacaoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // $certificacoes = $this->certificacao->all();
-        $certificacoes = $this->certificacao->with('pessoaCertificacao')->get();
-        return response()->json($certificacoes, 200);
+        // $certificacoes = $this->certificacao->with('pessoaCertificacao')->get();
+        // return response()->json($certificacoes, 200);
+        $certificacaoRepository = new CertificacaoRepository($this->certificacao);
+
+        if($request->has('atributos_pessoaCertificacao')) {
+            $atributos_pessoaCertificacao = 'pessoaCertificacao:id,'.$request->atributos_pessoaCertificacao;
+            $certificacaoRepository->selectAtributosRegistrosRelacionados($atributos_pessoaCertificacao);
+        } else {
+            $certificacaoRepository->selectAtributosRegistrosRelacionados('pessoaCertificacao');
+        }
+
+        if($request->has('filtro')) {
+            $certificacaoRepository->filtro($request->filtro);
+        }
+
+        if($request->has('atributos')) {
+            $certificacaoRepository->selectAtributos($request->atributos);
+        } 
+
+        return response()->json($certificacaoRepository->getResultadoPaginado(3), 200);
     }
 
     /**

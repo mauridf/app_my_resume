@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TipoSkill;
 use Illuminate\Http\Request;
+use App\Repositories\TipoSkillRepository;
 
 class TipoSkillController extends Controller
 {
@@ -16,11 +17,29 @@ class TipoSkillController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // $tipoSkill = TipoSkill::all();
-        $tipoSkill = $this->tipoSkill->with('skill')->get();
-        return response()->json($tipoSkill,200);
+        // $tipoSkill = $this->tipoSkill->with('skill')->get();
+        // return response()->json($tipoSkill,200);
+        $tipoSkillRepository = new TipoSkillRepository($this->tipoSkill);
+
+        if($request->has('atributos_skills')) {
+            $atributos_skills = 'skill:id,'.$request->atributos_skills;
+            $tipoSkillRepository->selectAtributosRegistrosRelacionados($atributos_skills);
+        } else {
+            $tipoSkillRepository->selectAtributosRegistrosRelacionados('skill');
+        }
+
+        if($request->has('filtro')) {
+            $tipoSkillRepository->filtro($request->filtro);
+        }
+
+        if($request->has('atributos')) {
+            $tipoSkillRepository->selectAtributos($request->atributos);
+        } 
+
+        return response()->json($tipoSkillRepository->getResultadoPaginado(3), 200);
     }
 
     /**

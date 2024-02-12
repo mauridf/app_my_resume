@@ -19,7 +19,7 @@ class PessoaFormacaoController extends Controller
     public function index()
     {
         // $pessoaFormacoes = PessoaFormacao::all();
-        $pessoaFormacoes = $this->pessoaFormacoes->all();
+        $pessoaFormacoes = $this->pessoaFormacao->all();
         return $pessoaFormacoes;
     }
 

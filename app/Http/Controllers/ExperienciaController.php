@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Experiencia;
 use Illuminate\Http\Request;
+use App\Repositories\ExperienciaRepository;
 
 class ExperienciaController extends Controller
 {
@@ -15,11 +16,29 @@ class ExperienciaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // $experiencias = Experiencia::all();
-        $experiencias = $this->experiencia->with('pessoaExperiencia','experienciaSkill')->get();
-        return response()->json($experiencias,200);
+        // $experiencias = $this->experiencia->with('pessoaExperiencia','experienciaSkill')->get();
+        // return response()->json($experiencias,200);
+        $experienciaRepository = new ExperienciaRepository($this->experiencia);
+
+        if($request->has('atributos_pessoaExperiencia_ExperienciaSkill')) {
+            $atributos_pessoaExperiencia_ExperienciaSkill = 'pessoaExperiencia:id,experienciaSkill:id,'.$request->atributos_pessoaExperiencia_ExperienciaSkill;
+            $experienciaRepository->selectAtributosRegistrosRelacionados($atributos_pessoaExperiencia_ExperienciaSkill);
+        } else {
+            $experienciaRepository->selectDoisAtributosRegistrosRelacionados('pessoaExperiencia','experienciaSkill');
+        }
+
+        if($request->has('filtro')) {
+            $experienciaRepository->filtro($request->filtro);
+        }
+
+        if($request->has('atributos')) {
+            $experienciaRepository->selectAtributos($request->atributos);
+        } 
+
+        return response()->json($experienciaRepository->getResultadoPaginado(3), 200);
     }
 
     /**

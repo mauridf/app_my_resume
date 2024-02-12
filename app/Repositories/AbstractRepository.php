@@ -13,6 +13,11 @@ abstract class AbstractRepository {
         //a query está sendo montada
     }
 
+    public function selectDoisAtributosRegistrosRelacionados($atributos1,$atributos2) {
+        $this->model = $this->model->with($atributos1,$atributos2);
+        //a query está sendo montada
+    }
+
     public function filtro($filtros) {
         $filtros = explode(';', $filtros);
         

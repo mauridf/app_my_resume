@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\NivelIdioma;
 use Illuminate\Http\Request;
+use App\Repositories\NivelIdiomaRepository;
 
 class NivelIdiomaController extends Controller
 {
@@ -16,11 +17,29 @@ class NivelIdiomaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // $nivelIdiomas = NivelIdioma::all();
-        $nivelIdiomas = $this->nivelIdioma->with('pessoaIdiomas')->get();
-        return response()->json($nivelIdiomas,200);
+        // $nivelIdiomas = $this->nivelIdioma->with('pessoaIdiomas')->get();
+        // return response()->json($nivelIdiomas,200);
+        $nivelIdiomaRepository = new NivelIdiomaRepository($this->nivelIdioma);
+
+        if($request->has('atributos_pessoaIdiomas')) {
+            $atributos_pessoaIdiomas = 'pessoaIdiomas:id,'.$request->atributos_pessoaIdiomas;
+            $nivelIdiomaRepository->selectAtributosRegistrosRelacionados($atributos_pessoaIdiomas);
+        } else {
+            $nivelIdiomaRepository->selectAtributosRegistrosRelacionados('pessoaIdiomas');
+        }
+
+        if($request->has('filtro')) {
+            $nivelIdiomaRepository->filtro($request->filtro);
+        }
+
+        if($request->has('atributos')) {
+            $nivelIdiomaRepository->selectAtributos($request->atributos);
+        } 
+
+        return response()->json($nivelIdiomaRepository->getResultadoPaginado(3), 200);
     }
 
     /**
