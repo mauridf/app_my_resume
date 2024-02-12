@@ -27,7 +27,4 @@ Com todas as informações cadastradas é possível gerar o CV em PDF ao final e
 - Executar o comando migrate para gerar todas as tabelas
 - Executar o comando php artisan serve para rodar o Backend
 - Executar a intalação do pacote JWT
-- Configurar o JWT de acordo com a documentação em (https://jwt-auth.readthedocs.io/en/develop/)
-- Executar o comando php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider" para publicar o provider do JWT.
-- Gerar a secret com o comando php artisan jwt:secret
 - Executar o comando npn run dev ou npn run watch para gerar os assets e compilar
