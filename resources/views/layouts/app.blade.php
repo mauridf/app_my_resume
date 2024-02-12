@@ -33,7 +33,45 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        @auth
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('pessoas') }}">Pessoas</a>
+                            </li>
 
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Interesses</a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Idiomas</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Nível Idiomas</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Idiomas</a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Formacao</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Redes Sociais</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Certificados/Certificações/Premios</a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Skills</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Tipo Skills</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Skills</a>
+                                </div>
+                            </li>
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
