@@ -32,4 +32,5 @@ Com todas as informações cadastradas é possível gerar o CV em PDF ao final e
 - Gerar o esqueleto do fontend do projeto em Vue.js com o comando php artisan ui vue --auth
 - Baixar as dependencias do frontend com o comando npm install
 - Produzir o Bundle do fontend com o comando npm run dev (se ao finalizar n compilar e pedir para executar algum comando execute e depois repita o comando novamente até a compilação ocorrer)
+- Executar o npm install vuex@3.6.2 para instalar o Vuex para gerenciamento de store do Vue.js
 - Com o Back e o Front em execução é só acessar o link informado.

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Certificacao;
 use App\Repositories\CertificacaoRepository;
 use Illuminate\Http\Request;
-use App\Repositories\CertificacaoRepositoryRepository;
 
 class CertificacaoController extends Controller
 {

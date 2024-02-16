@@ -23,9 +23,13 @@ class ExperienciaController extends Controller
         // return response()->json($experiencias,200);
         $experienciaRepository = new ExperienciaRepository($this->experiencia);
 
-        if($request->has('atributos_pessoaExperiencia_ExperienciaSkill')) {
-            $atributos_pessoaExperiencia_ExperienciaSkill = 'pessoaExperiencia:id,experienciaSkill:id,'.$request->atributos_pessoaExperiencia_ExperienciaSkill;
-            $experienciaRepository->selectAtributosRegistrosRelacionados($atributos_pessoaExperiencia_ExperienciaSkill);
+        if($request->has('atributos_pessoaExperiencia')) {
+            $atributos_pessoaExperiencia = 'pessoaExperiencia:id,'.$request->atributos_pessoaExperiencia;
+            $experienciaRepository->selectAtributosRegistrosRelacionados($atributos_pessoaExperiencia);
+        } 
+        if($request->has('atributos_experienciaSkill')) {
+            $atributos_experienciaSkill = 'experienciaSkill:id,'.$request->atributos_experienciaSkill;
+            $experienciaRepository->selectAtributosRegistrosRelacionados($atributos_experienciaSkill);
         } else {
             $experienciaRepository->selectDoisAtributosRegistrosRelacionados('pessoaExperiencia','experienciaSkill');
         }

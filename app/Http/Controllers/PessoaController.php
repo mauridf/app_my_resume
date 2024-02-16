@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Pessoa;
 use Illuminate\Http\Request;
+use App\Repositories\PessoaRepository;
 
 class PessoaController extends Controller
 {
@@ -17,12 +18,55 @@ class PessoaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // $pessoas = Pessoa::all();
         // $pessoas = $this->pessoa->all();
-        $pessoas = $this->pessoa->with('pessoaInteresses','pessoaCertificacao','pessoaFormacao','pessoaRedesSociais','pessoaIdiomas','pessoaSkill','pessoaExperiencia')->get();
-        return response()->json($pessoas,200);
+
+        $pessoaRepository = new PessoaRepository($this->pessoa);
+
+        if($request->has('atributos_pessoaInteresses')) {
+            $atributos_pessoaInteresses = 'pessoaInteresses:id,'.$request->atributos_pessoaInteresses;
+            $pessoaRepository->selectAtributosRegistrosRelacionados($atributos_pessoaInteresses);
+        } 
+        if($request->has('atributos_pessoaCertificacao')) {
+            $atributos_pessoaCertificacao = 'pessoaCertificacao:id,'.$request->atributos_pessoaCertificacao;
+            $pessoaRepository->selectAtributosRegistrosRelacionados($atributos_pessoaCertificacao);
+        } 
+        if($request->has('atributos_pessoaFormacao')) {
+            $atributos_pessoaFormacao = 'pessoaFormacao:id,'.$request->atributos_pessoaFormacao;
+            $pessoaRepository->selectAtributosRegistrosRelacionados($atributos_pessoaFormacao);
+        } 
+        if($request->has('atributos_pessoaRedesSociais')) {
+            $atributos_pessoaRedesSociais = 'pessoaRedesSociais:id,'.$request->atributos_pessoaRedesSociais;
+            $pessoaRepository->selectAtributosRegistrosRelacionados($atributos_pessoaRedesSociais);
+        } 
+        if($request->has('atributos_pessoaIdiomas')) {
+            $atributos_pessoaIdiomas = 'pessoaIdiomas:id,'.$request->atributos_pessoaIdiomas;
+            $pessoaRepository->selectAtributosRegistrosRelacionados($atributos_pessoaIdiomas);
+        } 
+        if($request->has('atributos_pessoaSkill')) {
+            $atributos_pessoaSkill = 'pessoaSkill:id,'.$request->atributos_pessoaSkill;
+            $pessoaRepository->selectAtributosRegistrosRelacionados($atributos_pessoaSkill);
+        } 
+        if($request->has('atributos_pessoaExperiencia')) {
+            $atributos_pessoaExperiencia = 'pessoaExperiencia:id,'.$request->atributos_pessoaExperiencia;
+            $pessoaRepository->selectAtributosRegistrosRelacionados($atributos_pessoaExperiencia);
+        } else {
+            $pessoaRepository->selectVariosAtributosRegistrosRelacionados('pessoaInteresses','pessoaCertificacao','pessoaFormacao','pessoaRedesSociais','pessoaIdiomas','pessoaSkill','pessoaExperiencia');
+        }
+
+        if($request->has('filtro')) {
+            $pessoaRepository->filtro($request->filtro);
+        }
+
+        if($request->has('atributos')) {
+            $pessoaRepository->selectAtributos($request->atributos);
+        } 
+
+        // $pessoas = $this->pessoa->with('pessoaInteresses','pessoaCertificacao','pessoaFormacao','pessoaRedesSociais','pessoaIdiomas','pessoaSkill','pessoaExperiencia')->get();
+        // return response()->json($pessoas,200);
+        return response()->json($pessoaRepository->getResultadoPaginado(3), 200);
     }
 
     /**

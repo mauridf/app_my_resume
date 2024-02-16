@@ -18,6 +18,11 @@ abstract class AbstractRepository {
         //a query está sendo montada
     }
 
+    public function selectVariosAtributosRegistrosRelacionados($atributos1,$atributos2,$atributos3,$atributos4,$atributos5,$atributos6,$atributos7) {
+        $this->model = $this->model->with($atributos1,$atributos2,$atributos3,$atributos4,$atributos5,$atributos6,$atributos7);
+        //a query está sendo montada
+    }
+
     public function filtro($filtros) {
         $filtros = explode(';', $filtros);
         
